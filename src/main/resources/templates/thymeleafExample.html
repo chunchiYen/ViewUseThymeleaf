@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<script>
+$(document).ready(function(){
+	$("#odd").click(function(){ alert("SpringBoot view use thymeleaf !");});
+
+});
+function onceClick(){
+	alert("SpringBoot view use thymeleaf !");	
+}
+
+function useToggle(tagid){	
+	var el = document.getElementById(tagid);	
+	if (el.style.display == 'block' || el.style.display == '') {
+	   	el.style.display = 'none';
+	} else {
+	   	el.style.display = 'block';
+	}		
+}
+function AllToggle(){	
+	var tagid ;
+	for(var i=1 ; i<=20 ;i++){		
+		tagid= i<100?'pre0'+i:'pre'+i;	
+		var el = document.getElementById(tagid);	
+	    if (el.style.display == 'block' || el.style.display == '') {
+	    	el.style.display = 'none';
+	     } else {
+	    	el.style.display = 'block';
+	    }			
+	}	
+}
+</script>
+
+<title>Insert title here</title>
+</head>
+<body>
+	<table>
+		<tr>
+		<td><a th:href="@{/}"><img th:src="@{images/tpi_newlogo_mini.png}" alt="Logo new design-2020.png" /> </a></td>
+		<td><span th:text="${welcomeMessage}" style="font-size:30px;"></span></td>
+		</tr>
+	</table>	
+
+	<div class="divbody">
+<!-- 
+變數表示：th:text th:untext、th:id、th:class、、th:object="${}"  *{…}
+條件判斷：th:if、th:unless、th:switch th:case、th:each、th:object
+選擇或星號表示式：th:selected、th:checked
+Url表示：th:src、th:action、th:href
+Layout：th:include、th:replace、th:insert、th:inline
+內聯：th:inline
+預定義的工具物件：#dates、#numbers、#strings、#bools、#arrays、#lists、#sets、#maps、#aggregates
+
+ -->
+
+		<p class="functiontitle" >變數表示</p>	
+		變數表示：th:text th:untext、th:id、th:class、th:style、th:with
+		<p class="methodtitle" th:onclick="useToggle('pre01')" >th:text th:untext</p>
+  <pre id="pre01">
+  welcomeMessageWithHtml = "&lt;b&gt;WellCome to my Thymeleaf Example !&lt;b&gt;"
+  &lt;p th:text="${welcomeMessageWithHtml}"&gt;	&lt;/p&gt;
+  &lt;p th:utext="${welcomeMessageWithHtml}"&gt; &lt;/p&gt;
+  &lt;div th:with="v=${visitorList[3]}" th:text="${v.username}"&gt;&lt;/div&gt;
+  </pre>	
+  		
+  		
+		<p th:text="'th:text 不解析html ： ' + ${welcomeMessageWithHtml}">	</p>
+		<p th:utext="'th:utext 會解析html ： ' + ${welcomeMessageWithHtml}">	</p>
+		
+		<p class="methodtitle" th:onclick="useToggle('pre01-1')" >th:with 用於thymeleaf 模版頁面中區域性變數定義的使用</p>
+		<p>定義一個標籤內的區域變數，此變數只可供此標籤內使用
+<pre id="pre01-1" >
+  &lt;div th:with="v=${visitorList[3]}" th:text="${v.username}"&gt;&lt;/div&gt;
+  &lt;div th:with="msg='thymeleaf user th:with'" th:text="${msg}"&lt:&gt;/div&gt;
+ 
+</pre>		
+		<p th:with="v=${visitorList[3]}" th:text="${v.username}"></p>
+		<p th:with="msg='thymeleaf user th:with'" th:text="${msg}"></p>
+
+		
+		<p class="methodtitle" th:onclick="useToggle('pre02')" >th:id、th:class、 th:style</p>	
+  <pre id="pre02">
+   &lt;style&gt; 
+    #odd{ width:640px; background:lightblue; }
+    .odd{ width:640px; background:pink; }    
+   &lt;/style&gt;
+  
+  oddeven = odd
+  &lt;p th:id="${oddeven}"&gt; 3/25 開放第二輪網路口罩預購，取貨期程縮短 &lt;/p&gt;  
+  &lt;p th:class="${oddeven}"&gt; 3/25 開放第二輪網路口罩預購，取貨期程縮短 &lt;/p&gt;
+  &lt;p th:onclick="useToggle('stylehide')"&gt;
+    &lt;span th:text="'display Hidden is ' + ${isHidden} + '，顯示結果=>' "&gt; &lt;/span&gt;
+    &lt;span th:style="'display:' + @{(${isHidden} ? 'none' : 'block')} + ''" id="stylehide"&gt;	
+		 3/25開放第二輪網路口罩預購，取貨期程縮短
+    &lt;/span&gt;
+  &lt;/p&gt;
+  </pre>
+		<p th:id="${oddeven}"> 3/25 開放第二輪網路口罩預購，取貨期程縮短 </p>
+		<p th:class="${oddeven}"> 3/25 開放第二輪網路口罩預購，取貨期程縮短 </p>
+		<p th:onclick="useToggle('stylehide')"><span th:text="'display Hidden is ' + ${isHidden} + '，顯示結果=>' "> </span>
+		<span th:style="'display:' + @{(${isHidden} ? 'none' : 'block')} + ''" id="stylehide">	
+		 3/25開放第二輪網路口罩預購，取貨期程縮短 </span></p>
+		 
+		<p class="functiontitle">條件判斷</p>
+		<p class="methodtitle"  th:onclick="useToggle('pre03')" >th:if、th:unless</p>
+		<p> th:if 當條件為true則顯示</p>
+		<p> th:unless 當條件為false則顯示</p>
+  <pre id="pre03">
+  &lt;p th:if="${oddeven} eq 'odd'" th:text="'oddeven : '+ {oddeven}"&gt; &lt;/p&gt;
+  <span th:if="${oddeven} eq 'odd'" th:text="'oddeven : ' + ${oddeven}"> </span>
+  &lt;p th:unless="${oddeven} neq 'odd'" th:text="'oddeven : '+ ${oddeven} "&gt; &lt;/p&gt;		
+  <span th:unless="${oddeven} neq 'odd'" th:text="'oddeven : ' + ${oddeven} "> </span>		
+  </pre>
+	
+		<p class="methodtitle"  th:onclick="useToggle('pre04');useToggle('pre05');" >th:switch th:case</p>
+		
+<pre id="pre04">
+  oddeven = odd
+  &lt;p th:switch="${oddeven}"&gt;
+    &lt;span th:case="even"&gt;even&lt;/span&gt;
+    &lt;span th:case="odd"&gt;odd&lt;/span&gt;
+    &lt;span th:case="one"&gt;one&lt;/span&gt;
+    &lt;span th:case="two"&gt;two&lt;/span&gt;
+    &lt;span th:case="three"&gt;three&lt;/span&gt;
+  &lt;/p>&gt;
+</pre>
+		<p th:switch="${oddeven}">
+			<span th:case="even">th:switch case 顯示結果為：even</span>
+			<span th:case="odd">th:switch case 顯示結果為：odd</span>
+			<span th:case="one">th:switch case 顯示結果為：one</span>
+			<span th:case="two">th:switch case 顯示結果為：two</span>
+			<span th:case="three">th:switch case 顯示結果為：three</span>
+		</p>
+		
+<pre id="pre05" class="preblock">
+  appliancesMap ： ("C", "冷氣")、("B", "冰箱")、("A", "電風扇")、
+  		   ("E", "氣炸鍋")、("D", "吸塵器")
+  appliancesSelected = E
+  &lt;p th:switch="${appliancesSelected}"&gt;
+    &lt;span th:each="mps:${appliancesMap}" 
+    th:case="${mps.key}" th:text="|${mps.key}  ${mps.value}|" &gt;&lt;/span&gt;		
+  &lt;/p&gt;
+</pre>		
+		<p th:switch="${appliancesSelected}">
+			<span th:each="mps:${appliancesMap}" th:case="${mps.key}" 
+			th:text="|th:switch case 顯示結果為：  ${mps.key}  ${mps.value}|"></span>		
+		</p>
+		
+		<p class="methodtitle" th:onclick="useToggle('pre06')">Elvis運算式與 三元表示式</p>
+<pre id="pre06">
+&star;三元表示式：
+    &lt;p th:text="${oddeven == 'odd'}?'奇數':'偶數'"&gt;&lt;/p&gt;
+&star;Elvis運算式：若${..}為null則顯示預設值
+    &lt;p th:text="${oddevenVar}?:'預設值為null'"&gt;&lt;/p&gt;
+</pre>
+		<p th:text="${oddeven == 'odd'}?'奇數':'偶數'"></p>
+		<p th:text="${oddevenVar}?:'預設值為null'"></p>
+		
+		<p class="functiontitle">選擇或星號表示式</p>
+		<p class="methodtitle" th:onclick="useToggle('pre07');userToggle('pre08');">th:each</p>
+		<p>將List或陣列的值用th:each顯示</p>
+<pre id="pre07">
+&lt;ul &gt;
+	&lt;li th:each="ulist:${appliancesArr}" th:text="${ulist}"&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</pre>
+		<ul >
+			<li th:each="ulist:${appliancesArr}" th:text="${ulist}"></li>
+		</ul>
+		<p>將Map用th:each顯示到Select中</p>
+<pre id="pre08">
+  &lt;select&gt;
+    &lt;option th:each="options: ${appliancesMap}" th:value="${options.key}" 
+    		th:text="${options.value}"&gt;	&lt;/option&gt;
+  &lt;/select&gt;
+</pre>		
+		<select>
+			<option th:each="options: ${appliancesMap}" th:value="${options.key}" th:text="${options.value}"></option>
+		</select>
+		
+		<div th:replace="fragments/extra::#prepersontable"></div>		
+		<div th:replace="fragments/extra::#persontable"></div>
+		
+		
+		
+		
+		
+		<p class="methodtitle"  th:onclick="useToggle('pre09');useToggle('pre10');useToggle('pre11');">th:object="${}"  *{…}</p>
+		<p>*要將物件中的資料成員顯示出來，類別的field需為public, 否則field無法直接被呼叫出來*</p>
+		<p>使用 ${...}將物件內容顯示出來</p>
+<pre id="pre09">
+  &lt;p th:text="|User:${visitor.username}  
+      VisitIp: ${visitor.visitip}  
+      VisitTime:${visitor.visittime}|"&gt;&lt;/p&gt;  
+</pre>		
+		<p th:text="|結果 : User:${visitor.username}  VisitIp: ${visitor.visitip}  VisitTime:${visitor.visittime}|"></p>
+		<p>使用 *{...}將物件內容顯示出來</p>
+
+<pre id="pre10">
+  &lt;p th:text="|User:*{visitor.username}  
+          VisitIp: *{visitor.visitip}  
+          VisitTime:*{visitor.visittime}|"&gt;&lt;/p&gt; 
+</pre>
+		<p th:text="|結果 : User:*{visitor.username}  VisitIp: *{visitor.visitip}  VisitTime:*{visitor.visittime}|"></p>
+
+		<p>使用th:object  *{...}將物件中的資料成員顯示出來</p>
+
+<pre class="preblock"  id="pre11">
+  &lt;div th:object="${visitor}"&gt;
+    &lt;p th:text="'User :' +*{username}"&gt;&lt;/p&gt;
+    &lt;p th:text="'VisitIp : ' + *{visitip}"&gt;&lt;/p&gt;
+    &lt;p th:text="'VisitTime : ' +*{visittime}"&gt;&lt;/p&gt;
+  &lt;/div&gt;		
+</pre>
+		結果 : 
+		<div th:object="${visitor}">
+			<p th:text="'User :' +*{username}"></p>
+			<p th:text="'VisitIp : ' + *{visitip}"></p>
+			<p th:text="'VisitTime : ' +*{visittime}"></p>
+		</div>		
+		
+		
+		
+		
+		<p class="methodtitle"  th:onclick="useToggle('pre12')">th:selected 用於宣告html 中的selected屬性資訊</p>
+
+<pre id="pre12">
+ ${appliancesSelected} = E
+  &lt;select&gt;
+    &lt;option th:each="options: ${appliancesMap}" 
+      th:selected="${options.key}==${appliancesSelected}"
+      th:value="${options.key}" th:text="${options.value}" &gt;
+    &lt;/option&gt;
+  &lt;/select&gt;
+</pre>
+		<select >
+			<option th:each="options: ${appliancesMap}"  
+					th:selected="${options.key}==${appliancesSelected}"
+					th:value="${options.key}" th:text="${options.value}" >
+			</option>
+		</select>
+		
+		<p class="methodtitle"  th:onclick="useToggle('pre13')">th:checked 用於宣告html 中的checked事件</p>
+<pre id="pre13">
+  appliancesSelected = E
+  &lt;div&gt;
+    &lt;input type="checkbox" th:each="options: ${appliancesMap}"  
+        th:text="${options:.value}" th:value="${options:.key}" 
+        th:checked="${options.key} == ${${options.key}==${appliancesSelected}}" /&gt; 
+  &lt;/div&gt;
+	
+</pre>		
+		<div class="divblock">
+			<input type="checkbox" th:each="options: ${appliancesMap}"  th:text="${options.value}" th:value="${options.key}" th:checked="${options.key} == ${appliancesSelected}" /> 
+		</div>
+	
+		<p class="methodtitle"  th:onclick="useToggle('pre14')">th:onclick 用於宣告html 中的onclick事件</p>
+<pre id="pre14">
+  function onceClick(){
+	alert("SpringBoot view use thymeleaf !");	
+  }
+  &lt;button th:onclick="onceClick()" class="button"&gt; th:onclick &lt;/button&gt;
+</pre>
+		<button th:onclick="onceClick()" class="button"> th:onclick </button>
+				
+		<p class="functiontitle">Url表示：th:src、th:action、th:href</p>
+		<p class="methodtitle" th:onclick="useToggle('pre15');">th:src 用於宣告html form標籤中src屬性資訊 </p>
+	
+<pre id="pre15">
+  &lt;img src="./images/Logonewdesign-20.png" 
+       th:src="@{images/thinkpower-logo3.png}" alt="logo" /&gt;
+  結果：
+  &lt;img src="images/thinkpower-logo3.png" alt="logo" /&gt;
+</pre>		
+		<img src="./images/Logonewdesign-20.png" th:src="@{images/thinkpower-logo3.png}" alt="logo" /><br>
+		
+		<p class="methodtitle" th:onclick="useToggle('pre16')">th:action 用於宣告html form標籤中action屬性資訊 </p>
+<pre id='pre16'>
+  &lt;form name="form1" action="/home.html" th:action="@{/visit}" method="POST&gt;
+    &lt;input type="text" th:value='${visitor.username}'/&gt;
+    &lt;input type="text" th:value='${visitor.visitip}'/&gt;
+    &lt;input type="text" th:value='${visitor.visittime}'/&gt;
+    &lt;input type="submit"/&gt;送出
+  &lt;/form&gt;
+  結果：
+  &lt;form name="form1" action="/th/visit" method="POST"&gt;
+    &lt;input type="text" name="username" value='Tony Stark'/&gt;
+    &lt;input type="hidden" name="visitip" value="159.11.133.25"/&gt;
+    &lt;input type="hidden" name="visittime" value="2021/02/28"/&gt;
+    &lt;input type="submit"/&gt;送出
+  &lt;/form&gt;
+</pre>
+		<div>
+			<form name="form1" action="/home.html" th:action="@{/visit}" method="POST">
+				<input type="text" name="username" th:value='${visitor.username}'/>
+				<input type="hidden" name="visitip" th:value="${visitor.visitip}"/>
+				<input type="hidden" name="visittime" th:value="${visitor.visittime}"/>
+				<input type="submit"/>送出
+			</form>
+		</div>
+		
+		<p class="methodtitle"  th:onclick="useToggle('pre17')">th:href 用於宣告html @標籤中href屬性資訊 </p>
+<pre id="pre17">
+  &lt;a  href="/thymeleaf" th:href="@{/}"&gt;返回首頁&lt;/a&gt;
+  結果：
+  &lt;a href="/th/"&gt;返回首頁&lt;/a&gt;
+</pre>
+		<a href="/thymeleaf" th:href="@{/}">返回首頁</a>
+		
+		
+		<p class="functiontitle">內聯 th:inline</p>
+		<p class="methodtitle" th:onclick="useToggle('pre18')"> th:inline="text"  th:inline="none"</p>
+		<p th:inline="none">使用th:inline，可在標籤範圍內使用 [[${...}]] 取得顯示變數</p>
+		<p th:inline="none">如果th:inline="none"，標籤範圍內無法使用[[${...}]]取得變數的值</p>
+		
+<pre id="pre18">
+  &lt;p th:inline="text"&gt;使用內聯： [[${welcomeMessage}]]  &lt;/p&gt;
+  &lt;p th:inline="none"&gt;禁止使用內聯： [[${welcomeMessage}]] &lt;/p&gt;
+</pre>
+		<p th:inline="text">使用內聯：[[${welcomeMessage}]] </p>		
+		<p th:inline="none" >禁止使用內聯：[[${welcomeMessage}]]</p>
+		
+		<p class="methodtitle"  th:onclick="useToggle('pre19')">JavaScript內聯</p>
+<pre id="pre19">
+  &lt;script th:inline="javascript"&gt;
+    function showMessage(){			
+      var msg = [[${welcomeMessage}]];
+	  var btnjs = document.getElementById("btnjs");
+      if(btnjs.innerText.includes("JavaScript內聯")){
+        btnjs.style.background="gray";
+        btnjs.style.color="red";
+        btnjs.style.width="640px";
+        btnjs.innerText = msg;
+      }else{
+        btnjs.style.background="#008CBA";
+        btnjs.style.color="white";
+        btnjs.style.width="160px";
+        btnjs.innerText = "JavaScript內聯";
+        
+      }
+    }
+  &lt;/script&gt; 
+  &lt;button  id="btnjs" th:onclick="showMessage();" class="button"&gt;JavaScript內聯&lt;/button&gt;
+</pre>		
+
+		<script th:inline="javascript">
+			function showMessage(){			
+				var msg = [[${welcomeMessage}]];
+				var btnjs = document.getElementById("btnjs");
+				if(btnjs.innerText.includes("JavaScript內聯")){
+					btnjs.style.background="gray";
+					btnjs.style.color="red";
+					btnjs.style.width="640px";
+					btnjs.innerText = msg;
+				}else{
+					btnjs.style.background="#008CBA";
+					btnjs.style.color="white";
+					btnjs.style.width="160px";
+					btnjs.innerText = "JavaScript內聯";
+					
+				}
+			}
+		</script>
+		<button  id="btnjs" th:onclick="showMessage();" class="button">JavaScript內聯</button>
+	
+		
+		<div th:inline="css"></div>
+		<p class="methodtitle" th:onclick="useToggle('pre20')">CSS內聯 結合 th:class 顯示</p>
+<pre id="pre20">
+  &lt;style th:inline="css"&gt;
+    .[[${cssbgpink}]]{
+      background:pink;
+      width:400px;
+    }
+  &lt;/style&gt;
+  &lt;p th:text="${welcomeMessage}" th:class="${cssbgpink}"&gt;&lt;/p&gt;
+</pre>
+
+		<style th:inline="css">
+		.[[${cssbgpink}]]{
+			background:pink;
+			width:400px;
+		}
+		</style>
+		<p th:text="${welcomeMessage}" th:class="${cssbgpink}"></p>
+		
+		
+		<p class="functiontitle" 
+		th:onclick="useToggle('datescopy');useToggle('numberscopy');useToggle('stringscopy')
+		;useToggle('boolscopy');useToggle('arrayscopy');useToggle('listscopy');
+		;useToggle('setscopy');useToggle('mapscopy');useToggle('aggrecopy');">預定義的工具物件</p>		
+		
+		<p class="methodtitle" th:onclick="useToggle('datescopy')">#dates 處理日期資料 生成，轉換，獲取日期的具體天數 年數。</p>
+		<div th:replace="toolobject::#datescopy"></div>
+		
+		<p class="methodtitle" th:onclick="useToggle('numberscopy');">#numbers 處理數字資料的轉換</p>
+		<div th:replace="toolobject::numberscopy"></div>
+		
+		<p class="methodtitle" th:onclick="useToggle('stringscopy');">#strings  處理String的相關操作</p>
+		<div th:replace="toolobject::stringscopy"></div>
+		
+		<p class="methodtitle" th:onclick="useToggle('boolscopy');">#bools 處理bool的相關操作</p>
+		<div th:replace="toolobject::boolscopy"></div>
+		
+		<p class="methodtitle" th:onclick="useToggle('arrayscopy');">#arrays  處理arrays的相關操作</p>
+		<div th:replace="toolobject::arrayscopy"></div>
+		
+		<p class="methodtitle" th:onclick="useToggle('listscopy');">#lists  處理lists的相關操作</p>
+		<div th:replace="toolobject::listscopy"></div>
+		
+		<p class="methodtitle" th:onclick="useToggle('setscopy');">#sets 處理sets的相關操作</p>
+		<div th:replace="toolobject::setscopy"></div>
+		
+		<p class="methodtitle" th:onclick="useToggle('mapscopy');">#maps 處理maps的相關操作</p>
+		<div th:replace="toolobject::mapscopy"></div>
+		
+		<p class="methodtitle" th:onclick="useToggle('aggrecopy');">#aggregates 處理#aggregates的相關操作</p>
+		<div th:replace="toolobject::aggrecopy"></div>
+		
+		<p class="functiontitle">Layout模版</p>
+		
+		<p>SpringBoot2.0 使用模版模版佈局需要先引入 thymeleaf的 thymeleaf-layout-dialect的dependency</p>
+<pre class="textblock">
+  &lt;dependency&gt;
+  &lt;groupId&gt;nz.net.ultraq.thymeleaf&lt;/groupId&gt;
+  &lt;artifactId&gt;thymeleaf-layout-dialect&lt;/artifactId&gt;
+  &lt;/dependency&gt;
+</pre>
+		<p class="methodtitle" >th:fragment</p>
+		<p>我們可以通過 th:fragment 來定義引用片段，然後可以在其他頁面進行引用</p>
+		<label class="font16">模版放置頁面：fragments/extra.html</label>
+<pre>
+ 
+  &lt;div th:fragment ="welcome"&gt;
+    &lt;label th:text="'Welcome, Today is  : ' + ${#dates.createNow()}"&gt;&lt;/label&gt;
+  &lt;/div&gt;    
+  &lt;span id="copy-section"&gt;    	
+    &copy; 2020 copyright by ChunChiYen
+  &lt;/span>
+  &lt;span th:fragment="copy"&gt;
+    &copy; 2020 The Good Thinkpower
+  &lt;/span&gt;
+</pre>
+		<!--  th:insert -->
+		<p class="methodtitle" >th:insert 將所引用的標籤及引用內容都顯示出來</p>
+		<p>在div標籤中插入fragments/extra.html中id= copy-section的所在標籤及內容</p>
+&lt;div th:insert="~{fragments/extra::#copy-section}"&gt;&lt;/div&gt;		
+<pre>
+  &lt;div&gt;
+    &lt;span id="copy-section"&gt;    	
+      &copy; 2020 copyright by ChunChiYen
+    &lt;/span&gt;
+  &lt;/div&gt;
+</pre>
+		頁面顯示結果如下：<div th:insert="~{fragments/extra::#copy-section}"></div>	
+		
+		<!-- th:replac -->
+		<p class="methodtitle" >th:replace 替換引用片段的標籤和內容。</p>
+		<p>將div替換成fragments/extra.html中fragement=welcome的所在標籤及內容</p>
+&lt;div th:replace="~{fragments/extra::welcome}"&gt;&lt;/div&gt;
+<pre>
+  &lt;div&gt;
+    &lt;label>Welcome, Today is  : Thu Mar 26 16:07:31 CST 2020&lt;/label&gt;
+  &lt;/div&gt;
+</pre>
+		頁面顯示結果如下：<div th:replace="~{fragments/extra::welcome}"></div>
+		
+		<!-- th:include -->
+		<p class="methodtitle" >th:include 只插入引用片段的內容</p>
+		<p>在div中加入fragments/extra.html中fragement=copyright的所在標籤的內容</p>
+&lt;div th:include="~{fragments/extra::copyright}"&gt;&lt;/div&gt;
+<pre>
+  &lt;div&gt;
+    &copy; 2020 The Good Thinkpower
+  &lt;/div&gt;
+</pre>
+		頁面顯示結果如下：<div th:include="~{fragments/extra::copyright}"></div>
+					
+		<p class="font16">此外，~{fragments/extra::copyright}" 也可簡化為 "fragments/extra::copyright"</p>
+	</div>
+	
+	<hr>
+	<p th:include="~{ fragments/extra::copyright }" class="copyright"></p>
+</body>
+</html>
+
+
+
+<style>
+.copyright{	
+	position: relative;
+	color:red;
+	bottom:10px;
+	left:30%;	
+}
+body{
+	width:80%;	
+	margin:0 auto;
+}
+.divbody{
+	margin:0 auto;
+	width: 80%;
+}
+.functiontitle{
+	font-size:20px;	
+	font-family:  'Comic Sans MS','標楷體';
+	font-stretch: semi-condensed;
+	font-style: italic;
+	width:660px;	
+	background:rgb(136, 243, 136);	
+}
+.methodtitle{
+	font-size:16px;	
+	font-family:  'Comic Sans MS','標楷體';
+	font-stretch: semi-condensed;
+	font-style: italic;
+	width:640px;	
+	background:rgba(236, 233, 17, 0.466);	
+}
+.odd{
+	width:640px;
+	background:pink;
+}
+#odd{
+	width:640px;
+	background:lightblue;
+}
+.even{
+	background:lightgreen;
+}
+.textblock{
+  border-width: 2px;
+  border-style:dashed;
+  width:640px;
+}
+.preblock{
+	 border-width: 2px;
+	 border-style:dashed;
+	 width:640px;
+}
+pre{
+	 border-width: 2px;
+	 border-style:dashed;
+	 width:640px;
+}
+.divblock{
+	border-width: 1px;
+	border-style:solid;
+	width:640px;	
+}
+#datescopy .numberscopy .stringscopy .boolscopy 
+#arrayscopy .listscopy .setscopy .mapscopy .aggrecopy{
+	border-width: 1px;
+	border-style:solid;
+	width:640px;	
+}
+.button {
+    background-color: #008CBA; /* Blue */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    border-radius: 8px;
+    opacity: 0.7;
+}
+.font8{font-size:8px;}
+.font12{font-size:12px;}
+.font14{font-size:14px;}
+.font16{font-size::16px;}
+.font18{font-size:18px;}
+</style>
+

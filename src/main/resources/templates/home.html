@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="css/theme.css"></link>
+    
+
+<style type="text/css">
+.userdata{
+	font-size:16px;
+	color:yellow;
+	background:gray;
+	width:200px;
+}
+.userdata2{
+	font-size:24px;
+	color:blue;
+}
+.maintitle{
+	font-size:24px;
+	font-style: italic;
+		
+}
+.mydiv{
+	position: absolute;
+	top:100px;
+	left:30%;
+	background: hsla(200, 11%, 95%, 0.329);
+}
+.welcome{	
+	color:blue;
+	position: absolute;
+	top:0px;
+	left:30%;
+}
+.footer{
+	color:red;
+	position: absolute;
+	bottom:10px;
+	left:30%;
+}
+</style>
+
+</head>
+<body style="background: rgba(162, 191, 247, 0.562);">
+
+	<div class="welcome maintitle" >
+		<p th:text="${welcomeMessage}"></p>
+	</div>
+
+	<div class="mydiv">
+		<div>
+			<img th:src="@{images/tpi_newlogo.png}" alt="Logo" /><br>		
+		</div>	
+		<p><a th:href="@{/thymeleaf}">Thymeleaf Example !</a></p>
+	
+	</div>
+	<div th:insert="extra::#copy-section" class="footer"></div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head >
+	<meta th:fragment="meta" id="meta" http-equiv="Content-Type" content="text/html; charset=UTF-8" />    
+    <title>Title</title>
+</head>
+<body>    
+    <div  th:fragment ="welcome">
+		<label th:text="'Welcome, Today is  : ' + ${#dates.createNow()}"></label>
+	</div>    
+    <span id="copy-section">    	
+        &copy; 2020 copyright by ChunChiYen
+    </span>
+    <span th:fragment="copyright">
+       &copy; 2020 The Good Thinkpower
+    </span>
+    
+    
+    
+<pre id="prepersontable">
+  &lt;tbody&gt;
+    &lt;tr th:each="per:${personifno}"  th:class="${perStat.odd}? 'odd':'even'"&gt;
+    &lt;td th:text="${per.idno}" width="40%">&lt;/td&gt;
+    &lt;td th:text="${per.name}" width="40%">&lt;/td&gt;
+    &lt;td th:text="${per.age}"&gt;&lt;/td&gt;
+    &lt;/tr&gt;		
+  &lt;/tbody&gt;
+</pre>    
+    <table id="persontable" border='1' style="width:640px;" >
+	    <thead>
+	    	<tr><td colspan='3' align="center">個人資訊</td></tr>
+	    	<tr><td>身分證號</td><td>姓名</td><td>年齡</td></tr>
+	    </thead>
+	    <tbody>
+			<tr th:each="per:${personifno}"  th:class="${perStat.odd}? 'odd':'even'">
+			<td th:text="${per.idno}" width="40%"></td>
+			<td th:text="${per.name}" width="40%"></td>
+			<td th:text="${per.age}"></td>	
+		</tr>		
+	    </tbody>
+	    
+    	<tfoot> <tr><td colspan='3' th:insert="fragments/extra::#copy-section"></td></tfoot>
+    </table>
+    
+</body>
+</html>
