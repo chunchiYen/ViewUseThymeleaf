@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head >
-	<meta th:fragment="meta" id="meta" http-equiv="Content-Type" content="text/html; charset=UTF-8" />    
+	<meta th:fragment="meta" id="meta" http-equiv="Content-Type" content="text/html; charset=UTF-8" />  
+	<link rel="stylesheet" type="text/css" href="./css/position.css" /> 
     <title>Title</title>
 </head>
 <body>    
-    <div  th:fragment ="welcome">
+    <div  th:fragment ="welcome" >
 		<label th:text="'Welcome, Today is  : ' + ${#dates.createNow()}"></label>
 	</div>    
     <span id="copy-section">    	

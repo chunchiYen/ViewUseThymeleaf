@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link th:href="@{css/position.css}" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="./css/position.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- 
+<link th:href="@{css/position.css}" type="text/css" rel="stylesheet"/>
+-->
+
+
+
+
+
 <script>
 $(document).ready(function(){
 	$("#odd").click(function(){ alert("SpringBoot view use thymeleaf !");});
@@ -75,7 +84,7 @@ Layout：th:include、th:replace、th:insert、th:inline
 		<p>定義一個標籤內的區域變數，此變數只可供此標籤內使用
 <pre id="pre01-1" >
   &lt;div th:with="v=${visitorList[3]}" th:text="${v.username}"&gt;&lt;/div&gt;
-  &lt;div th:with="msg='thymeleaf user th:with'" th:text="${msg}"&lt:&gt;/div&gt;
+  &lt;div th:with="msg='thymeleaf user th:with'" th:text="${msg}"&lt;&gt;/div&gt;
  
 </pre>		
 		<p th:with="v=${visitorList[3]}" th:text="${v.username}"></p>
@@ -491,6 +500,7 @@ Layout：th:include、th:replace、th:insert、th:inline
 
 
 <style>
+
 body{
 	width:80%;	
 	margin:0 auto;
@@ -552,6 +562,7 @@ pre{
 	border-style:solid;
 	width:640px;	
 }
+
 .button {
     background-color: #008CBA; /* Blue */
     border: none;
@@ -569,5 +580,13 @@ pre{
 .font14{font-size:14px;}
 .font16{font-size::16px;}
 .font18{font-size:18px;}
-</style>
 
+</style>
+<style>
+.copyright2{	
+	position: relative;
+	color:red;
+	bottom:10px;
+	left:30%;	
+}
+</style>
