@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>Mask 0.5</title>
+<script>
+
+	function showCVSInfo(){
+		var cvskind = document.getElementById("cvskind").value;
+		
+		if(cvskind == "7-11"){
+			document.getElementById("cvsinfo_seven").style.display="block";
+			document.getElementById("cvsinfo_family").style.display="none";
+			document.getElementById("cvsinfo_ok").style.display="none";
+			document.getElementById("cvsinfo_hilife").style.display="none";
+			
+		}else if(cvskind == "全家" ){
+			document.getElementById("cvsinfo_seven").style.display="none";
+			document.getElementById("cvsinfo_family").style.display="block";
+			document.getElementById("cvsinfo_ok").style.display="none";
+			document.getElementById("cvsinfo_hilife").style.display="none";
+		}else if(cvskind =="OK"){
+			document.getElementById("cvsinfo_seven").style.display="none";
+			document.getElementById("cvsinfo_family").style.display="none";
+			document.getElementById("cvsinfo_ok").style.display="block";
+			document.getElementById("cvsinfo_hilife").style.display="none";
+		}else if(cvskind=="Hi-Life"){
+			document.getElementById("cvsinfo_seven").style.display="none";
+			document.getElementById("cvsinfo_family").style.display="none";
+			document.getElementById("cvsinfo_ok").style.display="none";
+			document.getElementById("cvsinfo_hilife").style.display="block";
+		}
+		
+	}
+	
+	
+</script>
+<script th:inline="javascript">
+	function purchaseCancel(){		
+		document.location.href=[[@{/mask/}]];
+	}
+</script>
+</head>
+<body>	
+	<div class="maindiv" > 
+		<div class="center" style="width:200px;">
+			<a th:href="@{/mask/login}"> <img th:src="@{/images/mask.png}"  class="center">	</a>
+		</div>
+		<div class="center">
+			<table class="bordersolid btnwidth300 center" >
+				<thead>
+				<tr><td></td><td></td></tr>
+				</thead>
+				<tbody>
+				<tr><td>身分證號</td><td th:text="${personinfo.idno}"></td></tr>
+				<tr><td>姓名</td><td th:text=${personinfo.name}></td></tr>
+				<tr><td>密碼</td><td th:text="${personinfo.password}"></td></tr>
+				<tr><td>認證電話</td><td th:text="${personinfo.cellPhone}"></td></tr>
+				<tr><td>上次口罩購買時間</td><td th:text="${personinfo.lastPurchaseTime}"></td></tr>
+				<tr><td>上次口罩取貨商店</td><td th:text="${personinfo.lastPurchaseCVS}"></td></tr>
+				<tr><td>預購口罩時間</td><td th:text="${personinfo.prePurchaseTime}"></td></tr>
+				<tr><td>預購口罩取貨商店</td><td th:text="${personinfo.prePurchaseCVS}"></td></tr>
+				</tbody>
+				
+			</table>
+		</div>
+		<p>
+		 
+		<form th:if="${#strings.isEmpty(personinfo.prePurchaseTime)}"  th:action="@{/mask/maskquery}" method="POST" >
+			<input type="hidden" name="idno" th:value="${personinfo.idno}">
+			<input type="hidden" name="verified" value="true">
+			<input type="hidden" name="isprepurchase" value="false">
+			<p>
+			<div class="btnwidth300 center">
+				<label class="l-box">選擇便利商店：</label>		
+				<select id="cvskind" name="cvskind"  th:onchange="showCVSInfo();" class="divblock v-box cvs">
+					<option th:each="cvsname : ${kindOfCVS}" th:text="${cvsname}" th:value="${cvsname}" >
+				</select>
+			</div>			
+			<div class="btnwidth300 center">
+				<label class="l-box">選擇分店：</label>
+				<select id="branch_seven" name="branch_seven"  class="divblock v-box branch">
+					<option th:each="seven:${sevenBranch}" th:text="${seven}" th:value="${seven}">
+				</select>
+				<select id="branch_family" name="branch_family" class="divhide v-box branch">
+					<option th:each="family:${familyBranch}" th:text="${family}" th:value="${family}">
+				</select>	
+				<select id="branch_ok" name="branch_ok" class="divhide v-box branch">
+					<option th:each="ok:${okBranch}" th:text="${ok}" th:value="${ok}">
+				</select>		
+				<select id="branch_hilife"  name ="branch_hilife" class="divhide v-box branch">
+					<option th:each="hilife:${hilifeBranch}" th:text="${hilife}" th:value="${hilife}">
+				</select>		
+			</div>
+			
+			<div class="btnwidth300 center " >
+				<input type="submit" class="submitbtn formbtnsubmit btnwidth150">
+				<input type="button" class="submitbtn formbtncancel btnwidth150" value="取消" th:onclick="purchaseCancel()">
+			</div>			
+		</form>		
+		<div class="btnwidth300 center bordersolid" style="position:relative;top:0px;">
+			<a th:href="@{/mask/login}"><input type="button" class="button btnwidth300" value="回login頁"></a>
+		</div>
+	</div>
+</body>
+</html>
+<style>
+.formbtnsubmit{
+	position: relative;	
+	top:2px;
+	left:0x;
+}
+.formbtncancel{
+	position: relative;	
+	top:-40px;
+	left:150px;
+}
+.maindiv{
+	width:400px;
+	margin:0 auto;
+	align-content: center;
+}
+.center{	
+	margin:0 auto;
+	align-content: center;	
+}
+.btnwidth150{ width:150px;}
+.btnwidth200{ width:200px;}
+.btnwidth300{ width:300px;}
+.divhide{	display:none; }
+.divblock{ display:block; }
+.bordersolid{ border:1px;border-style:solid;}
+.submitbtn{	
+    background-color: #008CBA; /* Blue */
+    border: none;
+    padding: 10px 50px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    border-radius: 10px;
+    opacity: 0.9;
+    margin: 0 auto;
+}
+.button {	
+    background-color: #008CBA; /* Blue */
+    border: none;
+    color: black;    
+    padding: 10px 50px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    border-radius: 8px;
+    opacity: 0.9;
+    margin: 0 auto;
+}
+.l-box{
+	position: relative;	
+	top:8px;
+	left:0px;
+}
+.v-box{
+	position: relative;	
+	top:-10px;
+	left:120px;
+}
+.cvs{
+	width:80px;
+	font-size:16px;
+}
+.branch{
+	width:80px;
+	font-size:16px;
+}
+</style>

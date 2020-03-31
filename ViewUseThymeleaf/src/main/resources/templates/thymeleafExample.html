@@ -3,16 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" type="text/css" href="./css/position.css" th:href="@{css/position.css}"/>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-<!-- 
-<link th:href="@{css/position.css}" type="text/css" rel="stylesheet"/>
--->
-
-
-
-
 
 <script>
 $(document).ready(function(){
@@ -43,6 +34,12 @@ function AllToggle(){
 	    }			
 	}	
 }
+function menuToggle(){
+	$("#menuul").toggle(1000);
+}
+function menuHide(){
+	$("#menuul").hide(1000);
+}
 </script>
 
 <title>Insert title here</title>
@@ -54,7 +51,18 @@ function AllToggle(){
 		<td><span th:text="${welcomeMessage}" style="font-size:30px;"></span></td>
 		</tr>
 	</table>	
-
+	<div >
+		<div class="divmenu"  id="divmenu"><img th:src="@{images/menu-01.png}" th:onmouseover="menuToggle()" th:onclick="menuToggle()"/></div>
+		<div >
+			<ul  th:onclick="menuHide()"  id="menuul" style="display:none;" class="divmenuul divmenuli">
+				<li class="divmenuli"><a href="#varexpression" class="divmenua">變數表示</a></li>
+				<li class="divmenuli"><a href="#selectexpression" class="divmenua">選擇或星號表示式</a></li>
+				<li class="divmenuli"><a href="#urlexpression" class="divmenua">Url表示</a></li>
+				<li class="divmenuli"><a href="#pretools" class="divmenua">預定義的工具物件</a></li>
+				<li class="divmenuli"><a href="#titlelayout" class="divmenua">Layout模版</a></li>
+			</ul>
+		</div>
+	</div>
 	<div class="divbody">
 <!-- 
 變數表示：th:text th:untext、th:id、th:class、、th:object="${}"  *{…}
@@ -67,7 +75,7 @@ Layout：th:include、th:replace、th:insert、th:inline
 
  -->
 
-		<p class="functiontitle" >變數表示</p>	
+		<p id="varexpression" class="functiontitle" >變數表示</p>	
 		變數表示：th:text th:untext、th:id、th:class、th:style、th:with
 		<p class="methodtitle" th:onclick="useToggle('pre01')" >th:text th:untext</p>
   <pre id="pre01">
@@ -169,8 +177,8 @@ Layout：th:include、th:replace、th:insert、th:inline
 </pre>
 		<p th:text="${oddeven == 'odd'}?'奇數':'偶數'"></p>
 		<p th:text="${oddevenVar}?:'預設值為null'"></p>
-		
-		<p class="functiontitle">選擇或星號表示式</p>
+		<!-- 選擇或星號表示式 -->
+		<p id="selectexpression" class="functiontitle">選擇或星號表示式</p>
 		<p class="methodtitle" th:onclick="useToggle('pre07');userToggle('pre08');">th:each</p>
 		<p>將List或陣列的值用th:each顯示</p>
 <pre id="pre07">
@@ -194,10 +202,6 @@ Layout：th:include、th:replace、th:insert、th:inline
 		
 		<div th:replace="fragments/extra::#prepersontable"></div>		
 		<div th:replace="fragments/extra::#persontable"></div>
-		
-		
-		
-		
 		
 		<p class="methodtitle"  th:onclick="useToggle('pre09');useToggle('pre10');useToggle('pre11');">th:object="${}"  *{…}</p>
 		<p>*要將物件中的資料成員顯示出來，類別的field需為public, 否則field無法直接被呼叫出來*</p>
@@ -277,7 +281,7 @@ Layout：th:include、th:replace、th:insert、th:inline
 </pre>
 		<button th:onclick="onceClick()" class="button"> th:onclick </button>
 				
-		<p class="functiontitle">Url表示：th:src、th:action、th:href</p>
+		<p id="urlexpression" class="functiontitle">Url表示：th:src、th:action、th:href</p>
 		<p class="methodtitle" th:onclick="useToggle('pre15');">th:src 用於宣告html form標籤中src屬性資訊 </p>
 	
 <pre id="pre15">
@@ -396,7 +400,7 @@ Layout：th:include、th:replace、th:insert、th:inline
 			width:400px;
 		}
 		</style>
-		<p th:text="${welcomeMessage}" th:class="${cssbgpink}"></p>
+		<p id="pretools" th:text="${welcomeMessage}" th:class="${cssbgpink}" ></p>
 		
 		
 		<p class="functiontitle" 
@@ -431,7 +435,8 @@ Layout：th:include、th:replace、th:insert、th:inline
 		<p class="methodtitle" th:onclick="useToggle('aggrecopy');">#aggregates 處理#aggregates的相關操作</p>
 		<div th:replace="toolobject::aggrecopy"></div>
 		
-		<p class="functiontitle">Layout模版</p>
+		<!-- layout -->
+		<p class="functiontitle" id="titlelayout">Layout模版</p>
 		
 		<p>SpringBoot2.0 使用模版模版佈局需要先引入 thymeleaf的 thymeleaf-layout-dialect的dependency</p>
 <pre class="textblock">
@@ -492,7 +497,7 @@ Layout：th:include、th:replace、th:insert、th:inline
 					
 		<p class="font16">此外，~{fragments/extra::copyright}" 也可簡化為 "fragments/extra::copyright"</p>
 	</div>
-	
+	<div class="gototop"><a href="#divmenu"><img th:src="@{images/arrow.png}" ></a>TOP</div>
 	<hr>
 	<p th:include="~{ fragments/extra::copyright }" class="copyright"></p>
 </body>
@@ -501,9 +506,17 @@ Layout：th:include、th:replace、th:insert、th:inline
 
 
 <style>
+.gototop{
+	position:fixed;
+	right:30px;
+	bottom:30px;
+	width: 60px;
+    height: 100px;
+	text-align: center;
+}
 
 body{
-	width:80%;	
+	width:800px;	
 	margin:0 auto;
 }
 .divbody{
@@ -579,8 +592,28 @@ pre{
 .font8{font-size:8px;}
 .font12{font-size:12px;}
 .font14{font-size:14px;}
-.font16{font-size::16px;}
+.font16{font-size:16px;}
 .font18{font-size:18px;}
+.font18{font-size:20px;}
+
+.divmenu{
+	width:770px;
+	height: 45px;
+	background:rgb(136, 243, 136);	
+}
+.divmenuli{	 
+	 background:rgba(192, 255, 216, 0.336);
+	 width:150px;
+	 padding-bottom:10px;
+	 padding-top: 10px;
+}
+.divmenuul{
+ padding: 2px 2px 2px 2px;
+}
+.divmenua{
+	text-decoration:none;
+	 color:black;
+}
 
 </style>
 <style>

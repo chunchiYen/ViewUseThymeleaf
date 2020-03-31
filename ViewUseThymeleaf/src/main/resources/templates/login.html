@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript">
+function filltoinput(tagid){	
+	var acc =document.getElementById(tagid);	
+	document.getElementById("idno").value = acc.children[1].textContent;	
+	document.getElementById("password").value = acc.children[2].textContent;
+	document.getElementById("cellphone").value = acc.children[3].textContent;	
+}
+function formSubmit(){
+	var lens = document.getElementById("idno").value.length;
+	
+	if(	document.getElementById("idno").value.length <1 )	{		
+		alert("IDNO不可為空白!");
+		return;
+	}	
+	if(document.getElementById("password").value.length <1){
+		alert("PASSWORD不可為空白!");
+		return;
+	}
+	if(document.getElementById("password").value.length <5){
+		alert("PASSWORD不可少於5碼!");
+		return;
+	}	
+	if(document.getElementById("cellphone").value.length <1){
+		alert("手機號碼不可為空白!");
+		return;
+	}
+	document.getElementById("form-1").submit();	
+}
+
+
+</script>
+<title>Mask 0.5</title>
+</head>
+<body>
+	<div class="formdiv">
+		<p th:text="${errinfo}?:''" style="text-align:center;"></p>
+		<form name="form" id="form-1"  method="POST" action="maskquery.html" th:action="@{/mask/maskquery}">
+			<table>
+				<tr><td width="39%" class="login-field">IDNO : </td><td width="60%"><input class="login-value" type="text" name="idno" length="10" id="idno"></td></tr>
+				<tr><td class="login-field">PASSWORD :  </td><td><input class="login-value" type="text" name="password" length="12" id="password" ></td></tr>
+				<tr><td class="login-field">CellPhone :  </td><td><input class="login-value" type="text" name="cellphone" length="12" id="cellphone"></td></tr>
+				<tr><td colspan="2"><input type="button" class="button" th:onclick="formSubmit()" value="送出"></td></tr>
+			</table>			
+		</form>
+		<P>
+	</div>
+	
+	<div class="tablediv">
+		<p style="position:relative;left:50px;font-size:18px;font-style: italic;font-weight:bold;">範例帳號、密碼、電話：</p>
+		<table style="border:1px;border-style:solid;margin:0 auto;" >
+			<tr style="background:lightblue;" ><td>No.</td><td>Idno</td><td>Password</td><td>Phone</td><td>Name</td>	<td>上次購買時間</td><td>上次取貨地點</td><td>下次預購時間</td><td>預購取貨地點</td>		
+			<tr th:each="acc:${accountList}"  th:class="${accStat.odd}? 'odd':'even'" th:id="'acc_' + ${accStat.count}" th:onclick="|filltoinput('acc_${accStat.count}')|">				
+				<td th:text="${accStat.count}" width="20px"></td>
+				<td th:text="${acc.idno}"></td>
+				<td th:text="${acc.password}">Password</td>
+				<td th:text="${acc.cellPhone}">Phone</td>
+				<td th:text="${acc.name}">Name</td>
+				<td th:text="${acc.lastPurchaseTime}">上次購買時間</td>
+				<td th:text="${acc.lastPurchaseCVS}">上次取貨地點</td>
+				<td th:text="${acc.prePurchaseTime}">下次預購時間</td>
+				<td th:text="${acc.prePurchaseCVS}">預購取貨地點</td>
+			</tr>
+		</table>
+		
+		<p>
+		<form name="resetFrom" th:action="@{/mask/}" method="POST" style="border-style:none;">
+			<input type="hidden" name="dataAction" value="reset">		
+			<input type="submit" class="button" value="重設資料" >
+		</form>		
+	</div>
+		
+</body>
+</html>
+
+<style>
+.odd{
+	background:pink;
+}
+.even{	
+	background:lightgreen;
+}
+.tablediv{
+	position:relative;
+	top:50px;
+	margin:0 auto;
+	width:800px;
+	border:1px;  
+}
+.bordersolid{ border:1px;border-style:solid;}
+.formdiv{
+	position:relative;
+	top:50px;
+	margin:0 auto;
+	width:400px;
+	border:1px;  
+	border-style: dotted;
+}
+form{
+	width:350px;
+	border:1px;  
+	margin:0 auto;
+	border-style: solid;
+}
+
+.button {
+	width:99%;
+    background-color: #008CBA; /* Blue */
+    border: none;
+    color: black;    
+    padding: 10px 50px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    border-radius: 8px;
+    opacity: 0.9;
+    margin: 0 auto;
+}
+.login-field{
+	width:120px;
+    background-color: yellow; 
+    border: none;
+    color: black;    
+    padding: 10px 5px;
+    text-align: left;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+	font-style: italic;
+    border-radius: 4px;
+    opacity: 0.9;   
+}
+.login-value{	
+	width:190px;
+    background-color: lightblue; 
+    border: none;
+    color: black;    
+    padding: 10px 10px;
+    text-align: left;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
+    opacity: 0.9;   
+}
+</style>
