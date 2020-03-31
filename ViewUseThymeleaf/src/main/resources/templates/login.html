@@ -40,9 +40,9 @@ function formSubmit(){
 		<p th:text="${errinfo}?:''" style="text-align:center;"></p>
 		<form name="form" id="form-1"  method="POST" action="maskquery.html" th:action="@{/mask/maskquery}">
 			<table>
-				<tr><td width="39%" class="login-field">IDNO : </td><td width="60%"><input class="login-value" type="text" name="idno" length="10" id="idno"></td></tr>
-				<tr><td class="login-field">PASSWORD :  </td><td><input class="login-value" type="text" name="password" length="12" id="password" ></td></tr>
-				<tr><td class="login-field">CellPhone :  </td><td><input class="login-value" type="text" name="cellphone" length="12" id="cellphone"></td></tr>
+				<tr><td width="39%" class="login-field">IDNO : </td><td width="60%"><input class="login-value" type="text" name="idno" maxlength="10" id="idno"></td></tr>
+				<tr><td class="login-field">PASSWORD :  </td><td><input class="login-value" type="text" name="password" maxlength="12" id="password" ></td></tr>
+				<tr><td class="login-field">CellPhone :  </td><td><input class="login-value" type="text" name="cellphone" maxlength="12" id="cellphone"></td></tr>
 				<tr><td colspan="2"><input type="button" class="button" th:onclick="formSubmit()" value="送出"></td></tr>
 			</table>			
 		</form>
@@ -50,7 +50,7 @@ function formSubmit(){
 	</div>
 	
 	<div class="tablediv">
-		<p style="position:relative;left:50px;font-size:18px;font-style: italic;font-weight:bold;">範例帳號、密碼、電話：</p>
+		<p class="tabledesc">範例帳號、密碼、電話：</p>
 		<table style="border:1px;border-style:solid;margin:0 auto;" >
 			<tr style="background:lightblue;" ><td>No.</td><td>Idno</td><td>Password</td><td>Phone</td><td>Name</td>	<td>上次購買時間</td><td>上次取貨地點</td><td>下次預購時間</td><td>預購取貨地點</td>		
 			<tr th:each="acc:${accountList}"  th:class="${accStat.odd}? 'odd':'even'" th:id="'acc_' + ${accStat.count}" th:onclick="|filltoinput('acc_${accStat.count}')|">				
@@ -65,14 +65,38 @@ function formSubmit(){
 				<td th:text="${acc.prePurchaseCVS}">預購取貨地點</td>
 			</tr>
 		</table>
-		
+		<p th:switch="${datareset}?:''">
+			<span th:case="'true'">資料已重設</span>
+			<span th:case="'false'">資料未重設</span>
 		<p>
 		<form name="resetFrom" th:action="@{/mask/}" method="POST" style="border-style:none;">
 			<input type="hidden" name="dataAction" value="reset">		
 			<input type="submit" class="button" value="重設資料" >
 		</form>		
-	</div>
+		<p>
+		<div style="width:750px;height:300px;margin:0 auto;">
+			Mask0.5 Example使用了
+			${...}、@{...}
+			th:text、th:value、th:id、th:class
+			th:each、th:object *{...}
+			th:src、th:action、th:href、th:onclick
+			th:if、	th:inline、Elvis運算式、三元表示式
+			th:switch、th:case
+			${#dates.createNow()}、
+			th:insert="~{templeate::method(var1,var2)}" 、th:fragment(var1,var2)
 		
+		</div>
+		
+		
+	</div>
+	<div class="today">
+		<p th:text="'今天時間' + ${#dates.createNow()}"></p>
+	</div>	
+	<p>
+	<hr>
+	<div th:insert="~{fragments/extra::#copy-section}">	
+	</div>
+
 </body>
 </html>
 
@@ -146,5 +170,33 @@ form{
     font-size: 16px;
     border-radius: 4px;
     opacity: 0.9;   
+}
+.tabledesc{
+	position:relative;
+	left:50px;
+	font-size:18px;
+	font-style: italic;
+	font-weight:bold;
+}
+.today{
+	font-size:20px;
+	background:rgba(236, 255, 66, 0.466);
+	color:blue;
+	position:fixed;
+	right:30px;
+	top:10px;
+	width: 200px;
+    height: 80px;
+	text-align: center;
+	display: inline-block;
+	
+}
+#copy-section{
+	position: relative;
+	color:red;
+	bottom:5px;
+	left:30%;
+	align-content:center;
+	text-align: center;
 }
 </style>

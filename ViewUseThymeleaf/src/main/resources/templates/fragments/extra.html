@@ -9,13 +9,15 @@
     <div  th:fragment ="welcome" >
 		<label th:text="'Welcome, Today is  : ' + ${#dates.createNow()}"></label>
 	</div>    
-    <span id="copy-section">    	
+    <span id="copy-section">      
         &copy; 2020 copyright by ChunChiYen
     </span>
     <span th:fragment="copyright">
        &copy; 2020 The Good Thinkpower
     </span>
-    
+     <span th:fragment="copy(var1 , var2)">
+       <p th:text="'&copy; ' + ${var1} + ' Copyringt by '+ ${var2} "></p>
+    </span>
     
     
 <pre id="prepersontable">

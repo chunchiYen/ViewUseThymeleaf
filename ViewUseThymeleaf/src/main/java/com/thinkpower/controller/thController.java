@@ -33,14 +33,7 @@ public class thController {
 	private List<Integer> numList = Arrays.asList(238,900,602,242,101);
 	private List<Integer> intList = Arrays.asList(1,2,3,4,5,6,7,8,9,10);
 	private Integer[] intArr= {20,21,12,81,11,92};
-	/*	
-	@GetMapping("/")
-	public String toIndex(Model model) {
-		System.out.println("to home ");
-		model.addAttribute("welcomeMessage", welcomeMessage);
-		return "home";
-	}
-*/	
+
 	@RequestMapping({"/",""})	
 	public String toExample(Model model) {			
 		int numA = 12;

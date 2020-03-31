@@ -29,7 +29,7 @@ public class maskController {
 		new MaskOfPerson("F223456789" , "f1234" , "陳珊珊" , "0986123006" , "2020/01/29" ,"全家關島店" , "","")
 	);
 	List<MaskOfPerson>  maskPersonLists = null;
-
+	
 	String[] kindOfCVS = {"7-11","全家","OK","Hi-Life"};
 	
 	String[] sevenBranch = {"內湖","大安","興隆","寶山","香山","九如","九份","西湖","竹北","經國","武廟","三峽","淡水","大里","新社","斗六","鹽水","田中","鶯歌","石門","美麗華","北門"};
@@ -140,6 +140,8 @@ public class maskController {
 	
 		maskPersonListsOri = masks;
 		maskPersonLists = maskPersonListsOri;
+
+		model.addAttribute("datareset", "true");
 		model.addAttribute("accountList", maskPersonLists);
 		return "login";
 	}

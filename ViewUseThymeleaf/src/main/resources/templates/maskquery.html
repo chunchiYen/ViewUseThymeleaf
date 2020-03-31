@@ -52,15 +52,15 @@
 				<thead>
 				<tr><td></td><td></td></tr>
 				</thead>
-				<tbody>
-				<tr><td>身分證號</td><td th:text="${personinfo.idno}"></td></tr>
-				<tr><td>姓名</td><td th:text=${personinfo.name}></td></tr>
-				<tr><td>密碼</td><td th:text="${personinfo.password}"></td></tr>
-				<tr><td>認證電話</td><td th:text="${personinfo.cellPhone}"></td></tr>
-				<tr><td>上次口罩購買時間</td><td th:text="${personinfo.lastPurchaseTime}"></td></tr>
-				<tr><td>上次口罩取貨商店</td><td th:text="${personinfo.lastPurchaseCVS}"></td></tr>
-				<tr><td>預購口罩時間</td><td th:text="${personinfo.prePurchaseTime}"></td></tr>
-				<tr><td>預購口罩取貨商店</td><td th:text="${personinfo.prePurchaseCVS}"></td></tr>
+				<tbody th:object="${personinfo}">
+				<tr><td>身分證號</td><td th:text="*{idno}"></td></tr>
+				<tr><td>姓名</td><td th:text=*{name}></td></tr>
+				<tr><td>密碼</td><td th:text="*{password}"></td></tr>
+				<tr><td>認證電話</td><td th:text="*{cellPhone}"></td></tr>
+				<tr><td>上次口罩購買時間</td><td th:text="*{lastPurchaseTime}"></td></tr>
+				<tr><td>上次口罩取貨商店</td><td th:text="*{lastPurchaseCVS}"></td></tr>
+				<tr><td>預購口罩時間</td><td th:text="*{prePurchaseTime}"></td></tr>
+				<tr><td>預購口罩取貨商店</td><td th:text="*{prePurchaseCVS}"></td></tr>
 				</tbody>
 				
 			</table>
@@ -102,6 +102,9 @@
 		<div class="btnwidth300 center bordersolid" style="position:relative;top:0px;">
 			<a th:href="@{/mask/login}"><input type="button" class="button btnwidth300" value="回login頁"></a>
 		</div>
+	</div>
+		<hr>
+	<div th:insert="~{fragments/extra::copy('2020/03','thinkpowre:chunchiYen')}" class="copy">	
 	</div>
 </body>
 </html>
@@ -173,5 +176,14 @@
 .branch{
 	width:80px;
 	font-size:16px;
+}
+.copy{
+	position: relative;
+	color:red;
+	bottom:10px;
+	left:30%;
+	align-content:center;
+	text-align: center;
+
 }
 </style>
