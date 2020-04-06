@@ -45,23 +45,24 @@ function menuHide(){
 <title>Insert title here</title>
 </head>
 <body>
+
 	<table>
 		<tr>
-		<td><a th:href="@{/}"><img th:src="@{images/tpi_newlogo_mini.png}" alt="Logo new design-2020.png" /> </a></td>
+		<td id="tpi-logo"><a th:href="@{/}"><img th:src="@{images/tpi_newlogo_mini.png}" alt="Logo new design-2020.png" /> </a></td>
 		<td><span th:text="${welcomeMessage}" style="font-size:30px;"></span></td>
 		</tr>
 	</table>	
-	<div >
-		<div class="divmenu"  id="divmenu"><img th:src="@{images/menu-01.png}" th:onmouseover="menuToggle()" th:onclick="menuToggle()"/></div>
-		<div >
-			<ul  th:onclick="menuHide()"  id="menuul" style="display:none;" class="divmenuul divmenuli">
-				<li class="divmenuli"><a href="#varexpression" class="divmenua">變數表示</a></li>
-				<li class="divmenuli"><a href="#selectexpression" class="divmenua">選擇或星號表示式</a></li>
-				<li class="divmenuli"><a href="#urlexpression" class="divmenua">Url表示</a></li>
-				<li class="divmenuli"><a href="#pretools" class="divmenua">預定義的工具物件</a></li>
-				<li class="divmenuli"><a href="#titlelayout" class="divmenua">Layout模版</a></li>
+	
+	<p>
+	
+	<div class="H-arrange divmenu" id="divmenu" style="background:rgb(139, 151, 143);padding:10px 0px 10px 0px;">
+	<ul  class="H-arrange" style="padding:10px 0px 10px 0px;">
+				<li id="m1" class="H-arrange H-style"> <a href="#varexpression" class="divmenua">變數表示</a></li>
+				<li id="m2" class="H-arrange H-style"><a href="#selectexpression" class="divmenua">選擇或星號表示式</a></li>
+				<li id="m3" class="H-arrange H-style"><a href="#urlexpression" class="divmenua">Url表示</a></li>
+				<li id="m4" class="H-arrange H-style"><a href="#pretools" class="divmenua">預定義的工具物件</a></li>
+				<li id="m5" class="H-arrange H-style" ><a href="#titlelayout" class="divmenua">Layout模版</a></li>
 			</ul>
-		</div>
 	</div>
 	<div class="divbody">
 <!-- 
@@ -497,7 +498,7 @@ Layout：th:include、th:replace、th:insert、th:inline
 					
 		<p class="font16">此外，~{fragments/extra::copyright}" 也可簡化為 "fragments/extra::copyright"</p>
 	</div>
-	<div class="gototop"><a href="#divmenu"><img th:src="@{images/arrow.png}" ></a>TOP</div>
+	<div class="gototop"><a href="#tpi-logo"><img th:src="@{images/arrow.png}" ></a>TOP</div>
 	<hr>
 	<p th:include="~{ fragments/extra::copyright }" class="copyright"></p>
 </body>
@@ -601,18 +602,20 @@ pre{
 	height: 45px;
 	background:rgb(136, 243, 136);	
 }
-.divmenuli{	 
-	 background:rgba(192, 255, 216, 0.336);
-	 width:150px;
-	 padding-bottom:10px;
-	 padding-top: 10px;
-}
-.divmenuul{
- padding: 2px 2px 2px 2px;
-}
+
 .divmenua{
 	text-decoration:none;
 	 color:black;
+}
+.H-arrange{
+	display:inline;	
+}
+.H-style{
+	padding:10px 30px 10px 30px;	
+	background:rgba(192, 255, 216, 0.56);
+}
+.H-style:hover{
+	 background:rgb(229, 233, 253);	 
 }
 
 </style>
