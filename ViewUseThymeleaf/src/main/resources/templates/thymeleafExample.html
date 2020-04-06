@@ -339,7 +339,7 @@ Layout：th:include、th:replace、th:insert、th:inline
 		<p th:inline="none" >禁止使用內聯：[[${welcomeMessage}]]</p>
 		
 		<p class="methodtitle"  th:onclick="useToggle('pre19')">JavaScript內聯</p>
-<pre id="pre19">
+<pre id="pre19" th:inline="none">
   &lt;script th:inline="javascript"&gt;
     function showMessage(){			
       var msg = [[${welcomeMessage}]];
@@ -384,7 +384,7 @@ Layout：th:include、th:replace、th:insert、th:inline
 		
 		<div th:inline="css"></div>
 		<p class="methodtitle" th:onclick="useToggle('pre20')">CSS內聯 結合 th:class 顯示</p>
-<pre id="pre20">
+<pre id="pre20"  th:inline="none">
   &lt;style th:inline="css"&gt;
     .[[${cssbgpink}]]{
       background:pink;
