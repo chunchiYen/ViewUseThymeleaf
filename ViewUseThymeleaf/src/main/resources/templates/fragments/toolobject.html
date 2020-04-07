@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Insert title here</title>
+</head>
+<body>
+	<!-- #dates -->
+	<div class="datesfixed" id="datescopy" th:fragment="datescopy">
+		<p th:text="'${#dates.format(today) : ' + ${#dates.format(today)}"></p>
+		<span th:inlin="text"> ${#dates.format(today,'yyyy-MM-dd HH:mm')} : 
+		[[${#dates.format(today,'yyyy-MM-dd HH:mm')}]] 
+		</span>
+		<p th:text="'${#dates.year(today)} : ' + ${#dates.year(today)}"></p>
+		<p th:text="'${#dates.month(today)} : ' + ${#dates.month(today)}"></p>
+		<p th:text="'${#dates.monthName(today)} : ' + ${#dates.monthName(today)}"></p>
+		<p th:text="'${#dates.day(today)} : ' + ${#dates.day(today)}"></p>	
+		<p th:text="'${#dates.dayOfWeek(today)} : ' + ${#dates.dayOfWeek(today)}"></p>
+		<p th:text="'${#dates.dayOfWeekName(today)} : ' + ${#dates.dayOfWeekName(today)}"></p>
+		<p th:text="'${#dates.hour(today)} : ' + ${#dates.hour(today)}"></p>
+		<p th:text="'${#dates.minute(today)} : ' + ${#dates.minute(today)}"></p>
+		<p th:text="'${#dates.second(today)} : ' + ${#dates.second(today)}"></p>	           
+		<p th:text="'${#dates.createNow()} : ' + ${#dates.createNow()}"></p>	
+		
+		<span th:inlin="text"> {#dates.create('2020','03','23','13','14','15')} : 
+		[[${#dates.create('2020','03','23','13','14','15')}]] 
+		</span>
+	</div>
+	<!-- #numbers -->
+	<div id="numberscopy" th:fragment="numberscopy">
+		
+		<p class="font16 fontcolordarkyellow">對不夠位數的數字進行補0（formatInteger ）</p>
+		<p style=""> th:text="${#numbers.formatInteger('123',8)}" → <span th:text="${#numbers.formatInteger('123',8)}"></span> </p>		
+		
+		<p class="font16 fontcolordarkyellow">設定千位分隔符（formatInteger）</p>
+		<p>th:text="${#numbers.formatInteger('12001',2,'DEFAULT')}"  → <span th:text="${#numbers.formatInteger('12001',2,'DEFAULT')}"></span></p>
+		<p>th:text="${#numbers.formatInteger('12001',2,'POINT')}"  → <span th:text="${#numbers.formatInteger('12001',2,'POINT')}"></span></p>
+
+		<p class="font16 fontcolordarkyellow">精確小數點（formatDecimal ）</p>
+		<p> th:text="${#numbers.formatDecimal('10.123',3,2)}" → <span th:text="${#numbers.formatDecimal('10.123',3,2)}"></span></p>
+		<p class="font16 fontcolordarkyellow">設定百分號（formatPercent ）</p>
+		<p> th:text="${#numbers.formatPercent('0.2',2, 4)}"> → 	<span th:text="${#numbers.formatPercent('0.2',2, 4)}"></span></p>
+		<p> th:text="${#numbers.formatPercent('0.2',3, 2)}"> → <span th:text="${#numbers.formatPercent('0.2',3, 2)}"></span></p>
+		<p class="font16 fontcolordarkyellow">設定錢號（formatPercent ）</p>
+		<p> th:text="${#numbers.formatCurrency('1000')}"> → 	<span th:text="${#numbers.formatCurrency('1000')}"></span></p>
+		<p class="font16 fontcolordarkyellow">生成陣列（sequence ）	→ </p>
+		<p> &lt;div th:each="num : ${#numbers.sequence(0,5)}" &gt;   &lt;p th:text="${num}"&gt; &lt;/div&gt;   </p> 
+		<div th:each="num : ${#numbers.sequence(0,5)}" >			
+          <p th:text="${num}"></p>       
+		</div>
+		
+	</div>	
+		
+	<!-- #strings 處理String的相關操作-->
+	<div id="stringscopy" th:fragment="stringscopy">			
+		<p> th:text="${#strings.toString(stringArr)}" => <label th:text="${#strings.toString(stringArr)}"></label></p>
+		<p> th:text="${#strings.isEmpty(even)}"> => <label th:text="${#strings.isEmpty(even)}"></label></p>
+		<p> th:text="${#strings.listIsEmpty(stringArr)}"> => <label th:text="${#strings.listIsEmpty(stringArr)}"></label></p>
+		<p> th:text="${#strings.defaultString(company,'company default is null')}" => <label th:text="${#strings.defaultString(company,'company default is null')}"></label></p>
+		<p> th:text="${#strings.defaultString(name,'name default is null')}" => <span th:text="${#strings.defaultString(name,'name default is null')}"></span></p>
+		<p> th:text="${#strings.contains('thinkpower','pow')}" => <label th:text="${#strings.contains('thinkpower','pow')}"></label></p>
+		<p> th:text="${#strings.startsWith('thinkpower','think')}" => <label th:text="${#strings.startsWith('thinkpower','think')}"></label></p>
+		<p> th:text="${#strings.indexOf('thinkpower','i')}" => <label th:text="${#strings.indexOf('thinkpower','i')}"></label></p>
+		<p> th:text="${#strings.substring('thinkpower',3,5)}" => <label th:text="${#strings.substring('thinkpower',3,5)}"></label></p>
+		<p> th:text="${#strings.replace('superman','man','woman')}" => <label th:text="${#strings.replace('superman','man','woman')}"></label></p>
+		<p> th:text="${#strings.prepend('thinkpower','com.')}" => <label th:text="${#strings.prepend('thinkpower','com.')}"></label></p>
+		<p> th:text="${#strings.append('thinkpower','.api')}" => <label th:text="${#strings.append('thinkpower','.api')}"></label></p>
+		<p> th:text="${#strings.toUpperCase('thinkpower')}" => <label th:text="${#strings.toUpperCase('string')}"></label></p>
+		<p> th:text="${#strings.toLowerCase('THINKPOWER')}" => <label th:text="${#strings.toLowerCase('STRING')}"></label></p>
+		<p> th:text="${#strings.length('thinkpower.com')}" => <label th:text="${#strings.length('thinkpower.com')}"></label></p>
+		<p> th:text="${#strings.trim(' thinkpower.com ')}" => <label th:text="${#strings.trim(' thinkpower.com ')}"></label></p>		
+		<p> th:text="${#strings.abbreviate('12345678910',7)}" => <label th:text="${#strings.abbreviate('12345678910',7)}"></label></p>
+		<p> th:text="${#objects.nullSafe(obj,'該物件為null')}" => <label th:text="${#objects.nullSafe(obj,'該物件為null')}"></label></p>
+	</div>
+	
+	<!-- #bools : 處理bool的相關操作-->	
+	<div id="boolscopy" th:fragment="boolscopy">
+		<p> th:text="${#bools.isTrue(true)} => <span th:text="${#bools.isTrue(true)}"></span></p>
+		<p> th:text="${#bools.isFalse(true)}" => <span th:text="${#bools.isFalse(true)}"></span></p>
+		<p> th:text="${#bools.isTrue('true')}" => <span th:text="${#bools.isTrue('true')}"></span></p>
+		<p> th:text="${#bools.isTrue('false')}" => <span th:text="${#bools.isTrue('false')}"></span></p>
+		<p> th:text="${#bools.isTrue('on')}" => <span th:text="${#bools.isTrue('on')}"></span></p>
+		<p> th:text="${#bools.isTrue('off')} => <span th:text="${#bools.isTrue('off')}"></span></p>
+		<p> th:text="${#bools.isTrue(1)}" => <span th:text="${#bools.isTrue(1)}"></span></p>
+		<p> th:text="${#bools.isTrue(0)}" => <span th:text="${#bools.isTrue(0)}"></span></p>
+	</div>
+	
+	<!-- #arrays : 處理arrays的相關操作-->	
+	<div id="arrayscopy"  th:fragment="arrayscopy" >	
+		<p> th:text="${#arrays.toStringArray(stringArr)}" => <span th:text="${#arrays.toStringArray(stringArr)}"></span></p>
+		<p> th:text="${#arrays.length(stringArr)}" => <span th:text="${#arrays.length(stringArr)}"></span></p>
+		<p> th:text="${#arrays.isEmpty(stringArr)}" => <span th:text="${#arrays.isEmpty(stringArr)}"></span></p>
+		<p> th:text="${#arrays.contains(stringArr ,'Z')}" => <span th:text="${#arrays.contains(stringArr ,'Z')}"></span></p>
+		<p> th:text="${#arrays.containsAll(stringArr,stringArr2)}" => <span th:text="${#arrays.containsAll(stringArr , stringArr2)}"></span></p>
+				
+	</div>
+	
+	<!-- lists : 處理lists的相關操作-->
+	<div id="listscopy" th:fragment="listscopy" >
+		<p> th:text="${#lists.size(appliancesArr)}" => <span th:text="${#lists.size(appliancesArr)}"></span></p>
+		<p> th:text="${#lists.isEmpty(appliancesArr)}" => <span th:text="${#lists.isEmpty(appliancesArr)}"></span></p>
+		<p> th:text="${#lists.contains(appliancesArr,'冰箱')}" => <span th:text="${#lists.contains(appliancesArr,'冰箱')}"></span></p>
+		<p> th:text="${#lists.containsAll(appliancesArr,{'冰箱','吹風機'})}" => <span th:text="${#lists.containsAll(appliancesArr,{'冰箱','吹風機'})}"></span></p>
+		<p> th:text="${#lists.sort(appliancesArr)}" => <span th:text="${#lists.sort(appliancesArr)}"></span></p>
+		<p> th:each="apps:${appliancesArr}" th:text="${apps}" => <span th:each="apps:${appliancesArr}" th:text="${apps}"></span></p>
+	</div>
+	
+	<!-- #sets  : 處理sets的相關操作 -->
+	<div id="setscopy" th:fragment="setscopy">
+	
+		<p> th:text="${#sets.size(nameSet)}" => <span th:text="${#sets.size(nameSet)}"></span></p>
+		<p> th:text="${#sets.isEmpty(nameSet)}" => <span th:text="${#sets.isEmpty(nameSet)}"></span></p>		
+		<p> th:text="${#sets.contains(nameSet,'Hank')}" => <span th:text="${#sets.contains(nameSet,'Hank')}"></span></p>
+		<p> th:text="${#sets.containsAll(nameSet,searchNames)}" => <span th:text="${#sets.containsAll(nameSet,searchNames)}"></span></p>
+		<p> th:each="names:${nameSet}" th:text="${names} +' , '?:'null'" => <span th:each="names:${nameSet}" th:text="${names} + ' , '?:'null'"></span></p>
+
+	</div>
+	
+	<!-- #maps 處理#maps的相關操作 -->
+	<div id="mapscopy" th:fragment="mapscopy">
+
+		<p> th:text="${#maps.size(appliancesMap)}" => <span th:text="${#maps.size(appliancesMap)}"></span></p>
+		<p> th:text="${#maps.isEmpty(appliancesMap)}" => <span th:text="${#maps.isEmpty(appliancesMap)}"></span></p>
+		<p> th:text="${#maps.containsKey(appliancesMap, 'C')}" => <span th:text="${#maps.containsKey(appliancesMap, 'C')}"></span></p>	
+		<p> th:text="${#maps.containsAllKeys(appliancesMap, {'A','D'})}" => <span th:text="${#maps.containsAllKeys(appliancesMap, {'A','D'})}"></span> </p>
+		<p> th:text="${#maps.containsValue(appliancesMap, '冰箱')}" => <pspan th:text="${#maps.containsValue(appliancesMap, '冰箱')}"></span></pspan>
+		<p> th:text="${#maps.containsAllValues(appliancesMap, {'冰箱','冷氣'})}" => <span th:text="${#maps.containsAllValues(appliancesMap, {'冰箱','冷氣'})}"></span></p>
+		<p> th:text="${#maps.containsAllValues(appliancesMap, {'吹風機','冷氣'})}" => <span th:text="${#maps.containsAllValues(appliancesMap, {'吹風機','冷氣'})}"></span></p>
+	</div>
+	
+	<!-- #aggregates  處理#aggregates的相關操作 -->
+	<div id="aggrecopy" th:fragment="aggrecopy" >
+		<p> intArr : <span th:each="intarr:${intArr}" th:text="'['+${intarr} +']'"> </span></p>
+		<p> th:text="${#aggregates.sum(intArr)} " => <span th:text="${#aggregates.sum(intArr)} "></span></p>
+		<p> intList : <span th:each="intlist:${intList}" th:text="'['+ ${intlist} + ']'"> </span></p>
+		<p> th:text="${#aggregates.sum(intList)} " => <span th:text="${#aggregates.sum(intList)} "></span></p>
+		<p> th:text="${#aggregates.avg(intArr)} " => <span th:text="${#aggregates.avg(intArr)} "></span></p>
+	</div>
+	
+</body>
+</html>
+

@@ -65,7 +65,7 @@ function menuHide(){
 	<hr>
 	<p>
 	
-	<div class="H-arrange divmenu" id="divmenu" style="background:rgb(139, 151, 143);padding:10px 0px 10px 0px;">
+	<div class="H-arrange divmenu" id="divmenu">
 	<ul  class="H-arrange" style="padding:10px 0px 10px 0px;">
 				<li id="m1" class="H-arrange H-style"> <a href="#varexpression" class="divmenua">變數表示</a></li>
 				<li id="m2" class="H-arrange H-style"><a href="#selectexpression" class="divmenua">選擇或星號表示式</a></li>
@@ -75,16 +75,6 @@ function menuHide(){
 			</ul>
 	</div>
 	<div class="divbody">
-<!-- 
-變數表示：th:text th:untext、th:id、th:class、、th:object="${}"  *{…}
-條件判斷：th:if、th:unless、th:switch th:case、th:each、th:object
-選擇或星號表示式：th:selected、th:checked
-Url表示：th:src、th:action、th:href
-Layout：th:include、th:replace、th:insert、th:inline
-內聯：th:inline
-預定義的工具物件：#dates、#numbers、#strings、#bools、#arrays、#lists、#sets、#maps、#aggregates
-
- -->
 
 		<p id="varexpression" class="functiontitle" >變數表示</p>	
 		變數表示：th:text th:untext、th:id、th:class、th:style、th:with
@@ -123,7 +113,8 @@ Layout：th:include、th:replace、th:insert、th:inline
   &lt;p th:class="${oddeven}"&gt; 3/25 開放第二輪網路口罩預購，取貨期程縮短 &lt;/p&gt;
   &lt;p th:onclick="useToggle('stylehide')"&gt;
     &lt;span th:text="'display Hidden is ' + ${isHidden} + '，顯示結果=>' "&gt; &lt;/span&gt;
-    &lt;span th:style="'display:' + @{(${isHidden} ? 'none' : 'block')} + ''" id="stylehide"&gt;	
+    &lt;span th:style="'display:' + @{(${isHidden} ? 'none' : 'block')} + ''" 
+    		 id="stylehide"&gt;	
 		 3/25開放第二輪網路口罩預購，取貨期程縮短
     &lt;/span&gt;
   &lt;/p&gt;
@@ -165,7 +156,7 @@ Layout：th:include、th:replace、th:insert、th:inline
 			<span th:case="three">th:switch case 顯示結果為：three</span>
 		</p>
 		
-<pre id="pre05" class="preblock">
+<pre id="pre05">
   appliancesMap ： ("C", "冷氣")、("B", "冰箱")、("A", "電風扇")、
   		   ("E", "氣炸鍋")、("D", "吸塵器")
   appliancesSelected = E
@@ -237,7 +228,7 @@ Layout：th:include、th:replace、th:insert、th:inline
 
 		<p>使用th:object  *{...}將物件中的資料成員顯示出來</p>
 
-<pre class="preblock"  id="pre11">
+<pre id="pre11">
   &lt;div th:object="${visitor}"&gt;
     &lt;p th:text="'User :' +*{username}"&gt;&lt;/p&gt;
     &lt;p th:text="'VisitIp : ' + *{visitip}"&gt;&lt;/p&gt;
@@ -327,6 +318,7 @@ Layout：th:include、th:replace、th:insert、th:inline
 				<input type="text" name="username" th:value='${visitor.username}'/>
 				<input type="hidden" name="visitip" th:value="${visitor.visitip}"/>
 				<input type="hidden" name="visittime" th:value="${visitor.visittime}"/>
+				<input type="hidden" name="lang" th:value="${lang}?:'zh_TW'"/>
 				<input type="submit"/>送出
 			</form>
 		</div>
@@ -345,7 +337,7 @@ Layout：th:include、th:replace、th:insert、th:inline
 		<p th:inline="none">使用th:inline，可在標籤範圍內使用 [[${...}]] 取得顯示變數</p>
 		<p th:inline="none">如果th:inline="none"，標籤範圍內無法使用[[${...}]]取得變數的值</p>
 		
-<pre id="pre18">
+<pre id="pre18" th:inline="none">
   &lt;p th:inline="text"&gt;使用內聯： [[${welcomeMessage}]]  &lt;/p&gt;
   &lt;p th:inline="none"&gt;禁止使用內聯： [[${welcomeMessage}]] &lt;/p&gt;
 </pre>
@@ -423,31 +415,31 @@ Layout：th:include、th:replace、th:insert、th:inline
 		;useToggle('setscopy');useToggle('mapscopy');useToggle('aggrecopy');">預定義的工具物件</p>		
 		
 		<p class="methodtitle" th:onclick="useToggle('datescopy')">#dates 處理日期資料 生成，轉換，獲取日期的具體天數 年數。</p>
-		<div th:replace="toolobject::#datescopy"></div>
+		<div th:replace="fragments/toolobject::#datescopy"></div>
 		
 		<p class="methodtitle" th:onclick="useToggle('numberscopy');">#numbers 處理數字資料的轉換</p>
-		<div th:replace="toolobject::numberscopy"></div>
+		<div th:replace="fragments/toolobject::numberscopy"></div>
 		
 		<p class="methodtitle" th:onclick="useToggle('stringscopy');">#strings  處理String的相關操作</p>
-		<div th:replace="toolobject::stringscopy"></div>
+		<div th:replace="fragments/toolobject::stringscopy"></div>
 		
 		<p class="methodtitle" th:onclick="useToggle('boolscopy');">#bools 處理bool的相關操作</p>
-		<div th:replace="toolobject::boolscopy"></div>
+		<div th:replace="fragments/toolobject::boolscopy"></div>
 		
 		<p class="methodtitle" th:onclick="useToggle('arrayscopy');">#arrays  處理arrays的相關操作</p>
-		<div th:replace="toolobject::arrayscopy"></div>
+		<div th:replace="fragments/toolobject::arrayscopy"></div>
 		
 		<p class="methodtitle" th:onclick="useToggle('listscopy');">#lists  處理lists的相關操作</p>
-		<div th:replace="toolobject::listscopy"></div>
+		<div th:replace="fragments/toolobject::listscopy"></div>
 		
 		<p class="methodtitle" th:onclick="useToggle('setscopy');">#sets 處理sets的相關操作</p>
-		<div th:replace="toolobject::setscopy"></div>
+		<div th:replace="fragments/toolobject::setscopy"></div>
 		
 		<p class="methodtitle" th:onclick="useToggle('mapscopy');">#maps 處理maps的相關操作</p>
-		<div th:replace="toolobject::mapscopy"></div>
+		<div th:replace="fragments/toolobject::mapscopy"></div>
 		
 		<p class="methodtitle" th:onclick="useToggle('aggrecopy');">#aggregates 處理#aggregates的相關操作</p>
-		<div th:replace="toolobject::aggrecopy"></div>
+		<div th:replace="fragments/toolobject::aggrecopy"></div>
 		
 		<!-- layout -->
 		<p class="functiontitle" id="titlelayout">Layout模版</p>
@@ -478,7 +470,7 @@ Layout：th:include、th:replace、th:insert、th:inline
 		<p class="methodtitle" >th:insert 將所引用的標籤及引用內容都顯示出來</p>
 		<p>在div標籤中插入fragments/extra.html中id= copy-section的所在標籤及內容</p>
 &lt;div th:insert="~{fragments/extra::#copy-section}"&gt;&lt;/div&gt;		
-<pre>
+<pre class='prebox'>
   &lt;div&gt;
     &lt;span id="copy-section"&gt;    	
       &copy; 2020 copyright by ChunChiYen
@@ -575,9 +567,12 @@ body{
 	 width:640px;
 }
 pre{
-	 border-width: 2px;
-	 border-style:dashed;
-	 width:640px;
+	width:640px;
+	background:rgba(199, 196, 196, 0.705);
+	color:black;	
+	padding:10px 5px 10px 5px;	
+    font-size: 12px;
+    border-radius: 5px;
 }
 .divblock{
 	border-width: 1px;
@@ -613,9 +608,9 @@ pre{
 .divmenu{
 	width:770px;
 	height: 45px;
-	background:rgb(136, 243, 136);	
+	background:rgba(139, 151, 143 ,0.33);
+	padding:10px 0px 10px 0px;
 }
-
 .divmenua{
 	text-decoration:none;
 	 color:black;
@@ -625,10 +620,10 @@ pre{
 }
 .H-style{
 	padding:10px 30px 10px 30px;	
-	background:rgba(192, 255, 216, 0.56);
+	background:rgba(192, 255, 216, 0.76);
 }
 .H-style:hover{
-	 background:rgb(229, 233, 253);	 
+	 background:rgb(229, 253, 253);	 
 }
 .formdiv{
 	position:fixed;
@@ -637,12 +632,9 @@ pre{
 	width:150px;
 	height:25px;
 	background:rgba(192, 255, 216, 0.36);
-	margin: 0 auto;
-	content-align:center;
+	margin: 0 auto;	
 	padding:10px;
 }
-</style>
-<style>
 .copyright2{	
 	position: relative;
 	color:red;
@@ -650,3 +642,4 @@ pre{
 	left:30%;	
 }
 </style>
+

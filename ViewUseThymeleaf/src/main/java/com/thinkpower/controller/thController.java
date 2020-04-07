@@ -6,26 +6,19 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import com.thinkpower.model.Person;
 import com.thinkpower.model.VisitInfo;
@@ -57,7 +50,7 @@ public class thController {
 	private LocaleResolver localeResolver;
 
 	
-	@RequestMapping({"/",""})	
+	@RequestMapping(value={"/",""},method= {RequestMethod.POST ,RequestMethod.GET})	
 	public String toExample(Model model , HttpServletRequest request , HttpServletResponse response) {			
 		int numA = 12;
 		int numB = 4;
@@ -131,17 +124,6 @@ public class thController {
 		model.addAttribute("cssbgpink", "cssbgpink");
 		return "thymeleafExample";
 	}
-	@PostMapping("/visit")
-	public String toVisitPage(Model model , @RequestParam String username 
-			,@RequestParam String visitip , @RequestParam String visittime) {
-		
-		System.out.println("to visit page ");
-		model.addAttribute("username", username);
-		model.addAttribute("visitip", visitip);
-		model.addAttribute("visittime", visittime);
-		return "visitpage";
-	}
-  
 
 }
 class User{

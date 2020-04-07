@@ -8,6 +8,9 @@
 <p th:text="'user : ' + ${username}"></p>
 <p th:text="'ip : '+ ${visitip}"></p>
 <p th:text="'time : '+ ${visittime}"></p>
-<a th:href="@{/thymeleaf}">返回Thymeleaf頁</a>
+<a href="javascript:document.form1.submit();">返回Thymeleaf頁</a>
+<form name="form1" th:action="@{thymeleaf}" method="post"> 
+<input type="hidden" th:value="${lang}?:'zh_TW'" name="lang">
+</form>
 </body>
 </html>

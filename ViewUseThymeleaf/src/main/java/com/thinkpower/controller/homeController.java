@@ -29,7 +29,7 @@ public class homeController {
 	private String welcomeMessage;
 	@Value("<b>WellCome to my Thymeleaf Example !<b>")
 	private String welcomeMessageWithHtml;
-	private List<String> appliancesIndex = Arrays.asList("C","B","A","E","D");
+	
 	private static HashMap<String , String> map ;
 	static{
 		map = new HashMap<String,String>();
@@ -49,8 +49,6 @@ public class homeController {
 		  { "JP", "日本" }, 
 		  { "ru", "俄羅斯" }, 
 		}).collect(Collectors.toMap(data -> data[0], data -> data[1]));
-	
-	private Integer[] intArr= {20,21,12,81,11,92};
 		
 	@GetMapping("/")
 	public String toIndex(Model model) {

@@ -3,23 +3,29 @@ package com.thinkpower.controller;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.thinkpower.model.MaskOfPerson;
 
 @Controller
 @RequestMapping("/mask")
 public class maskController {
 	
-	private static List<String> CVSINFO = Arrays.asList("全家台北店","全家板橋店","全家大安店","全家北投店","全家淡水店","全家汐止店"
-				,"全家桃園店","全家內湖店","全家西湖店","全家台中店","全家台南店","全家彰化店","全家雲林店","全家新竹店");
+	//private static List<String> CVSINFO = Arrays.asList("全家台北店","全家板橋店","全家大安店","全家北投店","全家淡水店","全家汐止店"
+	//			,"全家桃園店","全家內湖店","全家西湖店","全家台中店","全家台南店","全家彰化店","全家雲林店","全家新竹店");
 	private List<MaskOfPerson>  maskPersonListsOri = Arrays.asList(
 		new MaskOfPerson("A123456789" , "a1234" , "喬伊" , "0986123001" , "2020/02/27" ,"全家台北店" , "",""),
 		new MaskOfPerson("B223456789" , "b1234" , "提娜" , "0986123002" , "2020/02/27" ,"全家台南店" , "2020/03/05","全家台中店"),
@@ -39,7 +45,10 @@ public class maskController {
 	
 	String[] stroeName = {"內湖","大安","興隆","寶山","香山","九如","九份","西湖","竹北","經國","武廟","三峽","淡水","大里","新社","斗六","鹽水","田中","鶯歌","石門","美麗華","北門"};
 
-	@RequestMapping({"","/","/login"})
+
+	
+	
+	@RequestMapping(value={"","/","/login"} , method= {RequestMethod.POST,RequestMethod.GET })
 	public String toLogin(Model model) {
 		maskPersonLists = maskPersonListsOri ;	
 		model.addAttribute("accountList", maskPersonLists);
@@ -145,5 +154,67 @@ public class maskController {
 		model.addAttribute("accountList", maskPersonLists);
 		return "login";
 	}
+	@PostMapping("/mask")
+	public @ResponseBody Map<String,Integer> getMaskInfo(@RequestParam String  city) {		
+		
+		Map<String , Integer> returnMap = new HashMap<String,Integer>();
+		returnMap.put("大樹藥局",99);
+		returnMap.put("快樂藥局",199);
+		returnMap.put("杏一藥局",67);
+		returnMap.put("一安藥局",0);
+		returnMap.put("康全藥局",62);
+		returnMap.put("博詮藥局",12);
+		
+		return returnMap;
+	}
 	
+	@GetMapping(value="/maskquery" ,params="returnmode")	
+	public @ResponseBody List<String> queryResult(@RequestParam String idno , @RequestParam String password 
+						, @RequestParam String cellphone ,@RequestParam String returnmode, Model model) {
+		boolean idnoFlag = false;		  
+		MaskOfPerson maskOfPerson = null;		
+		List<String> returnMsg = new ArrayList<String>();
+		if(!returnmode.equals("2")) {
+			returnMsg.add("returnmode Error");	
+			return returnMsg;
+		}
+		if(maskPersonLists==null)
+			maskPersonLists = maskPersonListsOri;
+		for(MaskOfPerson maskper:maskPersonLists) {
+			if( maskper.idno.equals(idno) ) {
+				idnoFlag = true;
+				maskOfPerson= maskper;					
+				break;			
+			}
+		}
+	
+		if(idnoFlag ) {		
+			if(maskOfPerson.password.equals(password) && maskOfPerson.cellPhone.equals(cellphone)) {	
+				returnMsg.add(maskOfPerson.idno);
+				returnMsg.add(maskOfPerson.name);
+				returnMsg.add(maskOfPerson.cellPhone);
+				returnMsg.add(maskOfPerson.lastPurchaseCVS);
+				returnMsg.add(maskOfPerson.lastPurchaseTime);
+				returnMsg.add(maskOfPerson.prePurchaseCVS);
+				returnMsg.add(maskOfPerson.prePurchaseTime);				
+				
+			}else {
+				if(!maskOfPerson.password.equals(password)) {		
+					returnMsg.add("身分認證密碼有誤!");					
+				}else if(! maskOfPerson.cellPhone.equals(cellphone)) {	
+					returnMsg.add("身分認證電話有誤");									
+				}							
+			}
+		}else {		
+			returnMsg.add("身分認證有誤[無此身分證]!");				
+		}	
+		return returnMsg;
+	}
+	@PostMapping("/pharmacy")
+	public @ResponseBody List<String> PharmacyInfo(@RequestParam String  city) {
+		
+		List<String> returnList = Arrays.asList("大樹","一安","新杏","祐全");		
+		return returnList;
+	}
+
 }

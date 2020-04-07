@@ -6,35 +6,30 @@
 <title>Mask 0.5</title>
 <script>
 
-	function showCVSInfo(){
-		var cvskind = document.getElementById("cvskind").value;
-		
-		if(cvskind == "7-11"){
-			document.getElementById("cvsinfo_seven").style.display="block";
-			document.getElementById("cvsinfo_family").style.display="none";
-			document.getElementById("cvsinfo_ok").style.display="none";
-			document.getElementById("cvsinfo_hilife").style.display="none";
-			
+	function changeBranch(){
+		var cvskind = document.getElementById("cvskind").value;		
+		if(cvskind == "7-11"){			
+			document.getElementById("branch_seven").style.display="block";
+			document.getElementById("branch_family").style.display="none";
+			document.getElementById("branch_ok").style.display="none";
+			document.getElementById("branch_hilife").style.display="none";			
 		}else if(cvskind == "全家" ){
-			document.getElementById("cvsinfo_seven").style.display="none";
-			document.getElementById("cvsinfo_family").style.display="block";
-			document.getElementById("cvsinfo_ok").style.display="none";
-			document.getElementById("cvsinfo_hilife").style.display="none";
+			document.getElementById("branch_seven").style.display="none";
+			document.getElementById("branch_family").style.display="block";
+			document.getElementById("branch_ok").style.display="none";
+			document.getElementById("branch_hilife").style.display="none";			
 		}else if(cvskind =="OK"){
-			document.getElementById("cvsinfo_seven").style.display="none";
-			document.getElementById("cvsinfo_family").style.display="none";
-			document.getElementById("cvsinfo_ok").style.display="block";
-			document.getElementById("cvsinfo_hilife").style.display="none";
+			document.getElementById("branch_seven").style.display="none";
+			document.getElementById("branch_family").style.display="none";
+			document.getElementById("branch_ok").style.display="block";
+			document.getElementById("branch_hilife").style.display="none";
 		}else if(cvskind=="Hi-Life"){
-			document.getElementById("cvsinfo_seven").style.display="none";
-			document.getElementById("cvsinfo_family").style.display="none";
-			document.getElementById("cvsinfo_ok").style.display="none";
-			document.getElementById("cvsinfo_hilife").style.display="block";
-		}
-		
-	}
-	
-	
+			document.getElementById("branch_seven").style.display="none";
+			document.getElementById("branch_family").style.display="none";
+			document.getElementById("branch_ok").style.display="none";
+			document.getElementById("branch_hilife").style.display="block";
+		}		
+	}	
 </script>
 <script th:inline="javascript">
 	function purchaseCancel(){		
@@ -43,11 +38,11 @@
 </script>
 </head>
 <body>	
-	<div class="maindiv" > 
+	<div class="maindiv bordersolid" > 
 		<div class="center" style="width:200px;">
 			<a th:href="@{/mask/login}"> <img th:src="@{/images/mask.png}"  class="center">	</a>
 		</div>
-		<div class="center">
+		<div>
 			<table class="bordersolid btnwidth300 center" >
 				<thead>
 				<tr><td></td><td></td></tr>
@@ -66,15 +61,15 @@
 			</table>
 		</div>
 		<p>
-		 
+		<div>
 		<form th:if="${#strings.isEmpty(personinfo.prePurchaseTime)}"  th:action="@{/mask/maskquery}" method="POST" >
 			<input type="hidden" name="idno" th:value="${personinfo.idno}">
 			<input type="hidden" name="verified" value="true">
 			<input type="hidden" name="isprepurchase" value="false">
 			<p>
 			<div class="btnwidth300 center">
-				<label class="l-box">選擇便利商店：</label>		
-				<select id="cvskind" name="cvskind"  th:onchange="showCVSInfo();" class="divblock v-box cvs">
+				<label class="l-box">選擇便利商店：</label>			
+				<select id="cvskind" name="cvskind"  th:onchange="changeBranch()" class="divblock v-box cvs">
 					<option th:each="cvsname : ${kindOfCVS}" th:text="${cvsname}" th:value="${cvsname}" >
 				</select>
 			</div>			
@@ -94,16 +89,18 @@
 				</select>		
 			</div>
 			
-			<div class="btnwidth300 center " >
-				<input type="submit" class="submitbtn formbtnsubmit btnwidth150">
-				<input type="button" class="submitbtn formbtncancel btnwidth150" value="取消" th:onclick="purchaseCancel()">
+			<div class="btnwidth300 center" >
+				<input type="submit" class="submitbtn formbtnsubmit btnwidth140" value="確定">				
+				<input type="button" class="submitbtn formbtncancel btnwidth140"  value="取消" th:onclick="purchaseCancel()">
 			</div>			
-		</form>		
-		<div class="btnwidth300 center bordersolid" style="position:relative;top:0px;">
-			<a th:href="@{/mask/login}"><input type="button" class="button btnwidth300" value="回login頁"></a>
+		</form>	
+		</div>	
+		<div class="btnwidth300 center" style="position:relative;top:10px;padding:10px 10px 20px 10px;">
+			<a th:href="@{/mask/login}"><input type="button" class="button btnwidth290" value="回login頁"></a>
 		</div>
-	</div>
-		<hr>
+	</div>		
+
+	<hr>
 	<div th:insert="~{fragments/extra::copy('2020/03','thinkpowre:chunchiYen')}" class="copy">	
 	</div>
 </body>
@@ -112,12 +109,12 @@
 .formbtnsubmit{
 	position: relative;	
 	top:2px;
-	left:0x;
+	left:2x;
 }
 .formbtncancel{
 	position: relative;	
-	top:-40px;
-	left:150px;
+	top:2px;
+
 }
 .maindiv{
 	width:400px;
@@ -128,29 +125,29 @@
 	margin:0 auto;
 	align-content: center;	
 }
-.btnwidth150{ width:150px;}
+.btnwidth140{ width:140px;}
 .btnwidth200{ width:200px;}
 .btnwidth300{ width:300px;}
+.btnwidth290{ width:290px;}
 .divhide{	display:none; }
 .divblock{ display:block; }
 .bordersolid{ border:1px;border-style:solid;}
 .submitbtn{	
     background-color: #008CBA; /* Blue */
     border: none;
-    padding: 10px 50px;
+    padding: 10px 20px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 18px;
     border-radius: 10px;
     opacity: 0.9;
-    margin: 0 auto;
+
 }
 .button {	
     background-color: #008CBA; /* Blue */
-    border: none;
-    color: black;    
-    padding: 10px 50px;
+    border: none;      
+    padding: 10px 20px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -180,8 +177,7 @@
 .copy{
 	position: relative;
 	color:red;
-	bottom:10px;
-	left:30%;
+	bottom:5px;
 	align-content:center;
 	text-align: center;
 

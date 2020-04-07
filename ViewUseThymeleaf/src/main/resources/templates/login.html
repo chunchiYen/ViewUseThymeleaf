@@ -50,7 +50,11 @@ function formSubmit(){
 	</div>
 	
 	<div class="tablediv">
-		<p class="tabledesc">範例帳號、密碼、電話：</p>
+		<p class="tabledesc">範例帳號、密碼、電話： 	</p>
+		<span th:switch="${datareset}?:''" class="datareset">
+			<label th:case="'true'">資料已重設</label>
+			<label th:case="'false'">資料未重設</label>
+		</span>
 		<table style="border:1px;border-style:solid;margin:0 auto;" >
 			<tr style="background:lightblue;" ><td>No.</td><td>Idno</td><td>Password</td><td>Phone</td><td>Name</td>	<td>上次購買時間</td><td>上次取貨地點</td><td>下次預購時間</td><td>預購取貨地點</td>		
 			<tr th:each="acc:${accountList}"  th:class="${accStat.odd}? 'odd':'even'" th:id="'acc_' + ${accStat.count}" th:onclick="|filltoinput('acc_${accStat.count}')|">				
@@ -65,37 +69,33 @@ function formSubmit(){
 				<td th:text="${acc.prePurchaseCVS}">預購取貨地點</td>
 			</tr>
 		</table>
-		<p th:switch="${datareset}?:''">
-			<span th:case="'true'">資料已重設</span>
-			<span th:case="'false'">資料未重設</span>
-		<p>
+		
 		<form name="resetFrom" th:action="@{/mask/}" method="POST" style="border-style:none;">
 			<input type="hidden" name="dataAction" value="reset">		
 			<input type="submit" class="button" value="重設資料" >
 		</form>		
-		<p>
-		<div style="width:750px;height:300px;margin:0 auto;">
-			Mask0.5 Example使用了
-			${...}、@{...}
-			th:text、th:value、th:id、th:class
-			th:each、th:object *{...}
-			th:src、th:action、th:href、th:onclick
-			th:if、	th:inline、Elvis運算式、三元表示式
-			th:switch、th:case
-			${#dates.createNow()}、
-			th:insert="~{templeate::method(var1,var2)}" 、th:fragment(var1,var2)
-		
-		</div>
-		
-		
+	</div>
+
+	<div  class="spanblock">
+		<pre>
+  Mask0.5 Example使用了
+  ${...}、@{...}
+  th:text、th:value、th:id、th:class
+  th:each、th:object *{...}
+  th:src、th:action、th:href、th:onclick、th:onchange
+  th:if、th:inline、Elvis運算式、三元表示式
+  th:switch、th:case
+  ${#dates.createNow()}、
+  th:fragment(var1,var2)、th:insert="~{templeate::method(var1,var2)}" 
+  		</pre>
+	</div>
+
+	<hr>
+	<div th:insert="~{fragments/extra::#copy-section}">	
 	</div>
 	<div class="today">
 		<p th:text="'今天時間' + ${#dates.createNow()}"></p>
 	</div>	
-	<p>
-	<hr>
-	<div th:insert="~{fragments/extra::#copy-section}">	
-	</div>
 
 </body>
 </html>
@@ -110,10 +110,12 @@ function formSubmit(){
 .tablediv{
 	position:relative;
 	top:50px;
+	padding:10px 0px 80px 0px;
 	margin:0 auto;
 	width:800px;
 	border:1px;  
 }
+
 .bordersolid{ border:1px;border-style:solid;}
 .formdiv{
 	position:relative;
@@ -122,12 +124,24 @@ function formSubmit(){
 	width:400px;
 	border:1px;  
 	border-style: dotted;
+	
 }
 form{
 	width:350px;
 	border:1px;  
+	padding:10px;
 	margin:0 auto;
 	border-style: solid;
+}
+.spanblock{
+	width:700px;	
+	background:rgba(199, 196, 196, 0.705);
+	color:black;	
+	padding:10px 5px 10px 50px;	
+    font-size: 16px;
+    margin:0 auto;
+    border-radius: 8px;
+    align-content:center;	
 }
 
 .button {
@@ -178,6 +192,13 @@ form{
 	font-style: italic;
 	font-weight:bold;
 }
+.datareset{
+	position:relative;
+	left:50px;
+	font-size:14px;
+	font-style: italic;
+	font-weight:bold;
+}
 .today{
 	font-size:20px;
 	background:rgba(236, 255, 66, 0.466);
@@ -191,10 +212,11 @@ form{
 	display: inline-block;
 	
 }
+
 #copy-section{
 	position: relative;
 	color:red;
-	bottom:5px;
+	bottom:5px;	
 	left:30%;
 	align-content:center;
 	text-align: center;
