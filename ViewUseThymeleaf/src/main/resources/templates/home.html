@@ -3,9 +3,15 @@
 <head>
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" href="css/theme.css"></link>
-    
+        
+<script th:inline="javascript">
+function toSubmit(){
+	var myform = document.getElementById("myform");
+	myform.action=[[@{thymeleaf}]];		
+	myform.submit();
+}
 
+</script>
 <style type="text/css">
 .userdata{
 	font-size:16px;
@@ -40,6 +46,19 @@
 	bottom:10px;
 	left:30%;
 }
+.formdiv{
+	position:fixed;
+	right:10px;
+	top:30px;
+	width:150px;
+	height:25px;
+	background:rgba(192, 255, 216, 0.36);
+	margin: 0 auto;
+	content-align:center;
+	padding:10px;
+}
+.font14{font-size:14px;}
+.font16{font-size:16px;}
 </style>
 
 </head>
@@ -53,10 +72,20 @@
 		<div>
 			<img th:src="@{images/tpi_newlogo.png}" alt="Logo" /><br>		
 		</div>	
-		<p><a th:href="@{thymeleaf}">Thymeleaf Example !</a></p>
+		
+		<p><a href="javascript:document.form1.submit();">Thymeleaf Example ! </a></p>
 		<p><a th:href="@{mask/}">Mask Example !</a></p>
-	
+	<!-- <a th:href="@{thymeleaf}"> -->
 	</div>
 	<div th:insert="fragments/extra::#copy-section" class="footer"></div>
+	<div class="formdiv" >
+		<form name="form1" id="myform" method="post" th:action="@{/thymeleaf}">	
+			<select  name="lang">
+				  <option th:each="options: ${localMaps}" th:value="${options.key}" th:text="${options.value}" class="font14"></option>
+			</select>
+			  
+			<input type="submit" value="變更">
+		</form>
+	</div>
 </body>
 </html>

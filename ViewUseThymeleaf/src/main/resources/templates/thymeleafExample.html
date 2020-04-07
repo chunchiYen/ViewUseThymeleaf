@@ -50,9 +50,19 @@ function menuHide(){
 		<tr>
 		<td id="tpi-logo"><a th:href="@{/}"><img th:src="@{images/tpi_newlogo_mini.png}" alt="Logo new design-2020.png" /> </a></td>
 		<td><span th:text="${welcomeMessage}" style="font-size:30px;"></span></td>
+		<td>	<div >
+				<form name="form1" id="myform" method="post" th:action="@{/thymeleaf}">	
+					<select  name="lang">
+						  <option th:each="options: ${localMaps}" th:value="${options.key}" th:text="${options.value}" th:selected="${options.key}==(${lang}?:'zh_TW')"  class="font14"></option>
+					</select>		  
+					<input type="submit" value="變更">
+				</form></div>
+		</td>
 		</tr>
 	</table>	
-	
+	<hr>	
+	<p th:text="#{welcome}"></p>  	
+	<hr>
 	<p>
 	
 	<div class="H-arrange divmenu" id="divmenu" style="background:rgb(139, 151, 143);padding:10px 0px 10px 0px;">
@@ -199,6 +209,9 @@ Layout：th:include、th:replace、th:insert、th:inline
 </pre>		
 		<select>
 			<option th:each="options: ${appliancesMap}" th:value="${options.key}" th:text="${options.value}"></option>
+		</select>
+		<select>
+			<option th:each="localmaps:${localemaps}" th:value="${localmaps.key}" th:text="${localmaps.value}"></option>
 		</select>
 		
 		<div th:replace="fragments/extra::#prepersontable"></div>		
@@ -500,7 +513,7 @@ Layout：th:include、th:replace、th:insert、th:inline
 	</div>
 	<div class="gototop"><a href="#tpi-logo"><img th:src="@{images/arrow.png}" ></a>TOP</div>
 	<hr>
-	<p th:include="~{ fragments/extra::copyright }" class="copyright"></p>
+	<p th:include="~{ fragments/extra::#copy-section }" class="copyright"></p>
 </body>
 </html>
 
@@ -617,7 +630,17 @@ pre{
 .H-style:hover{
 	 background:rgb(229, 233, 253);	 
 }
-
+.formdiv{
+	position:fixed;
+	right:10px;
+	top:30px;
+	width:150px;
+	height:25px;
+	background:rgba(192, 255, 216, 0.36);
+	margin: 0 auto;
+	content-align:center;
+	padding:10px;
+}
 </style>
 <style>
 .copyright2{	

@@ -6,8 +6,16 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +24,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import com.thinkpower.model.Person;
 import com.thinkpower.model.VisitInfo;
@@ -33,9 +43,22 @@ public class thController {
 	private List<Integer> numList = Arrays.asList(238,900,602,242,101);
 	private List<Integer> intList = Arrays.asList(1,2,3,4,5,6,7,8,9,10);
 	private Integer[] intArr= {20,21,12,81,11,92};
+	private Map<String, String> localMaps = Stream.of(new String[][] {
+		  { "zh_TW", "台灣" }, 
+		  { "FR", "法國"}, 
+		  { "zh_CN", "中國大陸"}, 
+		  { "en_US", "美國"}, 
+		  { "JP", "日本" }, 
+		  { "ru", "俄羅斯" }, 
+		}).collect(Collectors.toMap(data -> data[0], data -> data[1]));
+	
+	
+	@Autowired
+	private LocaleResolver localeResolver;
 
+	
 	@RequestMapping({"/",""})	
-	public String toExample(Model model) {			
+	public String toExample(Model model , HttpServletRequest request , HttpServletResponse response) {			
 		int numA = 12;
 		int numB = 4;
 		String[] stringArr = {"B","C","D","F","E","A"};
@@ -51,7 +74,9 @@ public class thController {
 		model.addAttribute("intList", intList);		
 		model.addAttribute("appliancesIndex", appliancesIndex);
 		model.addAttribute("appliancesArr", appliancesArr);
-		model.addAttribute("serarchArr", serarchArr);
+		model.addAttribute("serarchArr", serarchArr);		
+		model.addAttribute("localMaps", localMaps);		
+		model.addAttribute("lang", request.getParameter("lang"));
 		
 		VisitInfo visitor = new VisitInfo("Tony Stark","159.11.133.25","2021/02/28");
 		model.addAttribute("visitor", visitor);		
@@ -101,6 +126,7 @@ public class thController {
 		model.addAttribute("flagTrue", "TRUE");
 		model.addAttribute("flagFalse", false);		
 		
+		
 		model.addAttribute("oddeven", "odd");
 		model.addAttribute("cssbgpink", "cssbgpink");
 		return "thymeleafExample";
@@ -115,5 +141,18 @@ public class thController {
 		model.addAttribute("visittime", visittime);
 		return "visitpage";
 	}
-	
+  
+
+}
+class User{
+	public String name1;
+	public String name2;
+	public String name3;
+	public String name4;
+	public User(String name1 , String name2 , String name3 , String name4) {
+		this.name1 = name1;
+		this.name2 = name2;
+		this.name3 = name3;
+		this.name4 = name4;
+	}
 }

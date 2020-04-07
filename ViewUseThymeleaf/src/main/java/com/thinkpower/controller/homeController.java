@@ -6,7 +6,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -27,19 +30,40 @@ public class homeController {
 	@Value("<b>WellCome to my Thymeleaf Example !<b>")
 	private String welcomeMessageWithHtml;
 	private List<String> appliancesIndex = Arrays.asList("C","B","A","E","D");
-
+	private static HashMap<String , String> map ;
+	static{
+		map = new HashMap<String,String>();
+		map.put("zh_TW", "台灣");
+		map.put("FR", "法國");		
+		map.put("zh_CN", "中國大陸");
+		map.put("en_US", "美國");
+		map.put("JP", "日本");
+		map.put("ru", "俄羅斯");
+	}
+	
+	private Map<String, String> localMaps = Stream.of(new String[][] {
+		  { "zh_TW", "台灣" }, 
+		  { "FR", "法國"}, 
+		  { "zh_CN", "中國大陸"}, 
+		  { "en_US", "美國"}, 
+		  { "JP", "日本" }, 
+		  { "ru", "俄羅斯" }, 
+		}).collect(Collectors.toMap(data -> data[0], data -> data[1]));
+	
 	private Integer[] intArr= {20,21,12,81,11,92};
 		
 	@GetMapping("/")
 	public String toIndex(Model model) {
 		System.out.println("to home ");
 		model.addAttribute("welcomeMessage", welcomeMessage);
+		model.addAttribute("localMaps", localMaps);
 		return "home";
 	}
 	@GetMapping("/home")
 	public String toHome(Model model) {
 		System.out.println("to home ");
 		model.addAttribute("welcomeMessage", welcomeMessage);
+		model.addAttribute("localMaps", localMaps);
 		return "home";
 	}
 }

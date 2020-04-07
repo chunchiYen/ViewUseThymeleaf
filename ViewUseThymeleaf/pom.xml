@@ -18,8 +18,10 @@
 	<properties>
 	<!-- 
 		<thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
+		
 		<thymeleaf-layout-dialect.version>2.1.1</thymeleaf-layout-dialect.version>
 	 -->
+	
 		<java.version>1.8</java.version>
 	</properties>
 
