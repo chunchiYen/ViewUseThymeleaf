@@ -53,7 +53,6 @@ public class thController {
 	private MailConfig mailConfig;
 	
 	
-	
 	@RequestMapping(value={"/",""},method= {RequestMethod.POST ,RequestMethod.GET})	
 	public String toExample(Model model , HttpServletRequest request , HttpServletResponse response) {			
 		int numA = 12;

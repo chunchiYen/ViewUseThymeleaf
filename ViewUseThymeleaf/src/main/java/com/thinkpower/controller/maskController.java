@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.thinkpower.model.MaskOfPerson;
 import com.thinkpower.model.Pharmacy;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -51,7 +48,6 @@ public class maskController {
 	String[] hilifeBranch = {"西門","北門","東門","南門","動物園內","莊泰","鑫寶華","林園","中原","青大","台大","北大","中正","成功","瑞光","基湖","龜山","大林","斗南","雲林","六福村","劍湖山"};
 	
 	String[] stroeName = {"內湖","大安","興隆","寶山","香山","九如","九份","西湖","竹北","經國","武廟","三峽","淡水","大里","新社","斗六","鹽水","田中","鶯歌","石門","美麗華","北門"};
-
 	
 	static List<Pharmacy> pharmacyList = Arrays.asList(
 			new Pharmacy("5901012507","康麗藥局","02-27234117","台北市松山區南京東路3段303巷20號","432","422","2020/04","臺北市","松山區","中正里"),
@@ -63,9 +59,6 @@ public class maskController {
 			new Pharmacy("2901012503","快樂藥局","02-27333413","台東縣外島區南京東路3段93巷23號","333","333","2020/04","台東縣","外島區","綠島里")
 
 		);
-
-
-	
 	
 	@RequestMapping(value={"","/","/login"} , method= {RequestMethod.POST,RequestMethod.GET })
 	@ApiIgnore	// 使用此註解，於swagger忽略顯示
@@ -198,8 +191,9 @@ public class maskController {
 		boolean idnoFlag = false;		  
 		MaskOfPerson maskOfPerson = null;	
 		Map<String,String> returnMap = new HashMap<String,String>();
+			 
 		if(!returnmode.equals("2")) {
-			returnMap.put("retunrMessage", "returnmode Error! ");
+			returnMap.put("retunrMessage", "returnmode Error! ");			
 			return returnMap;
 		}
 		if(maskPersonLists == null)
@@ -232,6 +226,7 @@ public class maskController {
 		}else {					
 			returnMap.put("retunrMessage", "身分認證有誤[無此身分證]!");
 		}	
+		
 		return returnMap;
 	}
  
@@ -245,9 +240,8 @@ public class maskController {
 	@ApiOperation("查詢藥局口罩餘額")
 	@GetMapping(value="/pharmacy" , params="returnmode=all")
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success")})
-	public @ResponseBody List<Pharmacy> PharmacyAll() {	
-			
-		return pharmacyList;
+	public @ResponseBody List<Pharmacy> PharmacyAll() {			
+		 return pharmacyList;
 	}
 	
 
