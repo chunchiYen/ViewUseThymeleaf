@@ -23,6 +23,8 @@ import com.thinkpower.model.Pharmacy;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import springfox.documentation.annotations.ApiIgnore;
 @Api(tags = "Mask x.x")
 @Controller
@@ -232,9 +234,9 @@ public class maskController {
 		}	
 		return returnMap;
 	}
+ 
 	
-	
-	@PostMapping("/pharmacy")	
+	@PostMapping("/pharmacy")		
 	public @ResponseBody List<String> PharmacyInfo(@RequestParam String  city) {
 		
 		List<String> returnList = Arrays.asList("大樹","一安","新杏","祐全");		
@@ -242,6 +244,7 @@ public class maskController {
 	}
 	@ApiOperation("查詢藥局口罩餘額")
 	@GetMapping(value="/pharmacy" , params="returnmode=all")
+	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success")})
 	public @ResponseBody List<Pharmacy> PharmacyAll() {	
 			
 		return pharmacyList;

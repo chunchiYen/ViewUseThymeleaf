@@ -3,11 +3,11 @@ package com.thinkpower.model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-@ApiModel("藥局Entity")
+@ApiModel(description = "藥局Entity")
 public class Pharmacy {
 	@ApiModelProperty("藥局id")
 	public String id;
-	@ApiModelProperty("藥局名稱")
+	@ApiModelProperty(value="藥局名稱" )
 	public String name;
 	public String phone;
 	public String address;
@@ -17,7 +17,7 @@ public class Pharmacy {
 	public String county;
 	public String town;
 	public String cunli;
-	
+
 	public Pharmacy(String id,  String name, String phone,  String address,
             String mask_adult,  String mask_child,  String updated,  String county,
             String town,  String cunli){

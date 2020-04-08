@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.thinkpower.conf.MailConfig;
 import com.thinkpower.model.Person;
 import com.thinkpower.model.VisitInfo;
 
@@ -53,10 +54,10 @@ public class homeController {
 		
 	@GetMapping("/")
 	public String toIndex(Model model) {	
-
+		MailConfig mconf = new MailConfig();
 		model.addAttribute("welcomeMessage", welcomeMessage);
 		model.addAttribute("localMaps", localMaps);
-		
+		System.out.println(mconf.getHost());
 		return "home";
 	}
 	@GetMapping("/home")

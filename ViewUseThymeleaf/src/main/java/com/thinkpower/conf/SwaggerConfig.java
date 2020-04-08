@@ -3,7 +3,9 @@ package com.thinkpower.conf;
 import java.util.Collections;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.PropertySource;
 
+import com.google.common.base.Predicates;
 
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -18,12 +20,13 @@ public class SwaggerConfig {
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.select()
-	            .apis(RequestHandlerSelectors.any())
+	            .apis(RequestHandlerSelectors.basePackage("com.thinkpower.controller"))
 	            .paths(PathSelectors.any())
 	            .build()
 	            .apiInfo(apiInfo());
 	}
 	@Bean
+
 	private ApiInfo apiInfo() {
 		return new ApiInfo(
 		            "Spring Boot  Swagger 實例",

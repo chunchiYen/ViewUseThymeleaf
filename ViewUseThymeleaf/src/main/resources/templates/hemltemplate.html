@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<script></script>
+<style>
+
+.lightskyblue{	background:lightskyblue;}
+.pink{	background:pink;}
+.lightgreen{	background:lightgreen;}
+.borderstyle{
+	border:1px;
+	border-style:solid;
+}
+.container{
+	width:100%;	
+	display: block;
+	font-style: inherit;
+    font-weight: inherit;
+}
+.header{
+	position:fixed;
+	top:10px;
+	height:80px;
+	width:99%;
+	display: block;
+	
+}
+.header-menu{
+	position:relative;
+	top:20px;
+	left:0px;
+	display: block;
+	background:rgb(133, 199, 243);
+	padding:10px;
+}
+.footer{	
+	position:fixed;	
+	bottom:0px;
+	align-content:center;
+	text-align:center;	
+	height:40px;
+	width:100%;
+	background:lightskyblue;
+}
+.footer-content{
+	height:20px;
+	color:red;
+	bottom:0px
+}
+.leftsider{
+	position:relative;
+	width:150px;
+	top:80px;
+	left:0px;
+	display: block;
+	float:left;
+	padding:10px;
+}
+.rightsider{
+	position:relative;
+	top:80px;	
+	width:75%;
+	left:10px;
+	display: block;
+	float:left;
+}
+
+.content-area{
+	
+}
+.H-arrange{
+	display:inline;	
+}
+.H-style{
+	padding:10px 30px 10px 30px;	
+	background:rgba(192, 255, 216, 0.76);
+}
+.H-style:hover{
+	background:rgb(229, 253, 253);	 
+}
+</style>
+<title>Insert title here</title>
+</head>
+<body>
+
+<div>
+	<div class="container">
+	<!-- header -->  
+		<div class="header H-arrange">		
+			<div class="header-menu">
+				<ul class="H-arrange">
+					<li class="H-arrange H-style">ITEM1</li>
+					<li class="H-arrange H-style">ITEM2</li>
+					<li class="H-arrange H-style">ITEM3</li>
+				
+				</ul>	
+			</div>	
+		</div>
+	<!-- left right -->
+		<div  class="content-area ">
+			<div class="leftsider  ">
+				<p>Net</p>
+				<p>JAVA</p>
+				<p>Android</p>
+				<p>Architecture</p>
+				<p>ORACLE</p>
+			</div>
+			<div class="rightsider " >	
+					<h2>Efficiency of pair programming – experiences from a real project</h2>
+				<p >Without a doubt we have all heard, that pair programming is a good idea for various reasons. Most often those who have had experiences with actually practicing it for a while recommend…</p>
+				<h2>There is no agile project management</h2>
+				<p>We sw-developers tend to think we have revolutionized the entire field of project mangement with the invention of agile. Never again will we have to deal with tedious project managers who have…</p>
+					
+			</div>
+		</div>
+	<!-- footer -->
+	<div class="footer">
+		<div class="footer-content">
+			&copy; Copyright by chunchiYen 2020
+		</div>
+	</div>
+	</div>
+</div>
+
+</body>
+</html>
