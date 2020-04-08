@@ -1,20 +1,37 @@
 package com.thinkpower.model;
 
-import java.util.Map;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
+@ApiModel("藥局Entity")
 public class Pharmacy {
-	private String city;
-	private Map<String , Integer>  pharmacyMap ;
-	public Pharmacy(String city , Map<String,Integer> pharmacyMap) {
-		this.city = city;
-		this.pharmacyMap = pharmacyMap;
+	@ApiModelProperty("藥局id")
+	public String id;
+	@ApiModelProperty("藥局名稱")
+	public String name;
+	public String phone;
+	public String address;
+	public String mask_adult;
+	public String mask_child;
+	public String updated;
+	public String county;
+	public String town;
+	public String cunli;
+	
+	public Pharmacy(String id,  String name, String phone,  String address,
+            String mask_adult,  String mask_child,  String updated,  String county,
+            String town,  String cunli){
+		this.id = id;
+		this.name = name;
+		this.phone = phone;
+		this.address = address;
+		this.mask_adult = mask_adult;
+		this.mask_child = mask_child;
+		this.updated = updated;
+		this.county = county;
+		this.town = town;
+		this.cunli = cunli;	
 	}
 	
-	public String getCity() {		
-		return city;
-	}
-	public Map<String,Integer> getPharmacyMap(){		
-		return pharmacyMap;
-	}
 	
 }

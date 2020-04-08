@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,10 +52,11 @@ public class homeController {
 		}).collect(Collectors.toMap(data -> data[0], data -> data[1]));
 		
 	@GetMapping("/")
-	public String toIndex(Model model) {
-		System.out.println("to home ");
+	public String toIndex(Model model) {	
+
 		model.addAttribute("welcomeMessage", welcomeMessage);
 		model.addAttribute("localMaps", localMaps);
+		
 		return "home";
 	}
 	@GetMapping("/home")

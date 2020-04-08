@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.LocaleResolver;
 
+import com.thinkpower.conf.MailConfig;
 import com.thinkpower.model.Person;
 import com.thinkpower.model.VisitInfo;
 
@@ -48,7 +49,10 @@ public class thController {
 	
 	@Autowired
 	private LocaleResolver localeResolver;
-
+	@Autowired
+	private MailConfig mailConfig;
+	
+	
 	
 	@RequestMapping(value={"/",""},method= {RequestMethod.POST ,RequestMethod.GET})	
 	public String toExample(Model model , HttpServletRequest request , HttpServletResponse response) {			
@@ -70,7 +74,7 @@ public class thController {
 		model.addAttribute("serarchArr", serarchArr);		
 		model.addAttribute("localMaps", localMaps);		
 		model.addAttribute("lang", request.getParameter("lang"));
-		
+		model.addAttribute("mailconf", mailConfig);	
 		VisitInfo visitor = new VisitInfo("Tony Stark","159.11.133.25","2021/02/28");
 		model.addAttribute("visitor", visitor);		
 		
@@ -91,6 +95,7 @@ public class thController {
 		personList.add(new Person("G223456789","Tina",22));
 		personList.add(new Person("H223456789","Lucy",25));
 		model.addAttribute("personifno", personList);
+		
 		
 		HashMap<String , String> appliancesMap = new HashMap<String,String>();
 		appliancesMap.put("C", "冷氣");

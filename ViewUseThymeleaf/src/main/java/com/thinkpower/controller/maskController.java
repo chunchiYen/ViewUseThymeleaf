@@ -19,7 +19,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.thinkpower.model.MaskOfPerson;
+import com.thinkpower.model.Pharmacy;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import springfox.documentation.annotations.ApiIgnore;
+@Api(tags = "Mask x.x")
 @Controller
 @RequestMapping("/mask")
 public class maskController {
@@ -45,10 +50,22 @@ public class maskController {
 	
 	String[] stroeName = {"內湖","大安","興隆","寶山","香山","九如","九份","西湖","竹北","經國","武廟","三峽","淡水","大里","新社","斗六","鹽水","田中","鶯歌","石門","美麗華","北門"};
 
+	
+	static List<Pharmacy> pharmacyList = Arrays.asList(
+			new Pharmacy("5901012507","康麗藥局","02-27174117","台北市松山區南京東路3段303巷20號","432","422","2020/04","臺北市","松山區","中正里"),
+			new Pharmacy("5901012507","康麗藥局","02-27174117","台北市松山區南京東路3段303巷20號","432","422","2020/04","臺北市","松山區","中正里"),
+			new Pharmacy("5901012507","康麗藥局","02-27174117","台北市松山區南京東路3段303巷20號","432","422","2020/04","臺北市","松山區","中正里"),
+			new Pharmacy("5901012507","康麗藥局","02-27174117","台北市松山區南京東路3段303巷20號","432","422","2020/04","臺北市","松山區","中正里"),
+			new Pharmacy("5901012507","康麗藥局","02-27174117","台北市松山區南京東路3段303巷20號","432","422","2020/04","臺北市","松山區","中正里"),
+			new Pharmacy("5901012507","康麗藥局","02-27174117","台北市松山區南京東路3段303巷20號","432","422","2020/04","臺北市","松山區","中正里")
+			
+		);
+
 
 	
 	
 	@RequestMapping(value={"","/","/login"} , method= {RequestMethod.POST,RequestMethod.GET })
+	@ApiIgnore	// 使用此註解，於swagger忽略顯示
 	public String toLogin(Model model) {
 		maskPersonLists = maskPersonListsOri ;	
 		model.addAttribute("accountList", maskPersonLists);
@@ -57,6 +74,7 @@ public class maskController {
 
 	
 	@PostMapping(value="/maskquery")
+	@ApiIgnore		
 	public String toQuery(@RequestParam String idno , @RequestParam String password 
 						, @RequestParam String cellphone , Model model) {
 		boolean idnoFlag = false;		
@@ -95,7 +113,9 @@ public class maskController {
 			return "login";			
 		}	
 	}
+	
 	@PostMapping(value="/maskquery" , params="verified")
+	@ApiIgnore
 	public String toPrePurchare(HttpServletRequest request , @RequestParam String idno , @RequestParam String verified 
 							, Model model) {
 			
@@ -134,8 +154,9 @@ public class maskController {
 			return "login";
 		}
 	}
-		
-	@PostMapping(value={"/","/login"} ,params="dataAction=reset")		
+	
+	@PostMapping(value={"/","/login"} ,params="dataAction=reset")	
+	@ApiIgnore
 	public String toDataRest(Model model) {		
 		maskPersonLists = null;
 		
@@ -169,16 +190,16 @@ public class maskController {
 	}
 	
 	@GetMapping(value="/maskquery" ,params="returnmode")	
-	public @ResponseBody List<String> queryResult(@RequestParam String idno , @RequestParam String password 
+	public @ResponseBody Map<String,String> queryResult(@RequestParam String idno , @RequestParam String password 
 						, @RequestParam String cellphone ,@RequestParam String returnmode, Model model) {
 		boolean idnoFlag = false;		  
-		MaskOfPerson maskOfPerson = null;		
-		List<String> returnMsg = new ArrayList<String>();
+		MaskOfPerson maskOfPerson = null;	
+		Map<String,String> returnMap = new HashMap<String,String>();
 		if(!returnmode.equals("2")) {
-			returnMsg.add("returnmode Error");	
-			return returnMsg;
+			returnMap.put("retunrMessage", "returnmode Error! ");
+			return returnMap;
 		}
-		if(maskPersonLists==null)
+		if(maskPersonLists == null)
 			maskPersonLists = maskPersonListsOri;
 		for(MaskOfPerson maskper:maskPersonLists) {
 			if( maskper.idno.equals(idno) ) {
@@ -189,32 +210,41 @@ public class maskController {
 		}
 	
 		if(idnoFlag ) {		
-			if(maskOfPerson.password.equals(password) && maskOfPerson.cellPhone.equals(cellphone)) {	
-				returnMsg.add(maskOfPerson.idno);
-				returnMsg.add(maskOfPerson.name);
-				returnMsg.add(maskOfPerson.cellPhone);
-				returnMsg.add(maskOfPerson.lastPurchaseCVS);
-				returnMsg.add(maskOfPerson.lastPurchaseTime);
-				returnMsg.add(maskOfPerson.prePurchaseCVS);
-				returnMsg.add(maskOfPerson.prePurchaseTime);				
-				
+			if(maskOfPerson.password.equals(password) && maskOfPerson.cellPhone.equals(cellphone)) {
+				returnMap.put("retunrMessage", "200 ok");
+				returnMap.put("idno", maskOfPerson.idno);
+				returnMap.put("name", maskOfPerson.name);
+				returnMap.put("cellPhone", maskOfPerson.cellPhone);
+				returnMap.put("lastPurchaseCVS", maskOfPerson.lastPurchaseCVS);
+				returnMap.put("lastPurchaseTime", maskOfPerson.lastPurchaseTime);
+				returnMap.put("prePurchaseCVS", maskOfPerson.prePurchaseCVS);
+				returnMap.put("prePurchaseTime", maskOfPerson.prePurchaseTime);				
 			}else {
-				if(!maskOfPerson.password.equals(password)) {		
-					returnMsg.add("身分認證密碼有誤!");					
-				}else if(! maskOfPerson.cellPhone.equals(cellphone)) {	
-					returnMsg.add("身分認證電話有誤");									
+				if(!maskOfPerson.password.equals(password)) {					
+					returnMap.put("retunrMessage", "身分認證密碼有誤!");
+				}else if(! maskOfPerson.cellPhone.equals(cellphone)) {					
+					returnMap.put("retunrMessage", "身分認證電話有誤");
 				}							
 			}
-		}else {		
-			returnMsg.add("身分認證有誤[無此身分證]!");				
+		}else {					
+			returnMap.put("retunrMessage", "身分認證有誤[無此身分證]!");
 		}	
-		return returnMsg;
+		return returnMap;
 	}
-	@PostMapping("/pharmacy")
+	
+	
+	@PostMapping("/pharmacy")	
 	public @ResponseBody List<String> PharmacyInfo(@RequestParam String  city) {
 		
 		List<String> returnList = Arrays.asList("大樹","一安","新杏","祐全");		
 		return returnList;
 	}
+	@ApiOperation("查詢藥局口罩餘額")
+	@GetMapping(value="/pharmacy" , params="returnmode=all")
+	public @ResponseBody List<Pharmacy> PharmacyAll() {	
+			
+		return pharmacyList;
+	}
+	
 
 }
